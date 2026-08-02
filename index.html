@@ -1,0 +1,217 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Jornada da Autoadvocacia</title>
+    <link rel="stylesheet" href="style.css">
+</head>
+<body>
+    <div id="game-container">
+        <!-- ILUSTRAÇÕES DE FUNDO (TELAS DE CADASTRO) -->
+        <div class="nuvem nuvem-1"></div>
+        <div class="nuvem nuvem-2"></div>
+
+        <div class="moitas moitas-esq"></div>
+        <div class="moitas moita-dir"></div>
+
+        <div class="scenery-bottom"></div>
+        
+        <!-- Tela 1: Já jogou antes? -->
+        <div id="screen-welcome" class="game-screen active">
+            <div class="card text-center">
+                <h1>Já jogou antes?</h1>
+                <div class="options-container">
+                    <button id="btn-welcome-yes" class="btn-sim">sim</button>
+                    <button id="btn-welcome-no" class="btn-nao">não</button>
+                </div>
+            </div>
+        </div>
+
+        <!-- Tela 2: Qual seu dispositivo auditivo? -->
+        <div id="screen-device" class="game-screen">
+            <div class="card text-center">
+                <h1>Qual seu dispositivo auditivo?</h1>
+                <div class="options-container">
+                    <div class="device-option" data-device="a">
+                        <span class="option-title">Aparelho auditivo</span>
+                        <img src="img/Aparelho auditivo.png" alt="Aparelho auditivo">
+                    </div>
+                    <div class="device-option" data-device="i">
+                        <span class="option-title">Implante coclear</span>
+                        <img src="img/Implante coclear.png" alt="Implante coclear">
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- Tela 3: Qual seu nome? -->
+        <div id="screen-name" class="game-screen">
+            <div class="card">
+                <h1>Qual seu nome?</h1>
+                <div class="input-container">
+                    <input type="text" id="player-name" placeholder="" autocomplete="off">
+                </div>
+                <button id="btn-name-next" class="btn-primary" disabled>Avançar</button>
+            </div>
+        </div>
+
+        <!-- Tela 4: Escolha seu avatar -->
+        <div id="screen-avatar" class="game-screen">
+            <div class="card text-center">
+                <h1>Escolha seu avatar</h1>
+                <div class="avatar-carousel">
+                    <button class="nav-arrow left" id="avatar-prev">&lt;</button>
+                    <div class="avatar-display" id="avatar-container">
+                        <img id="current-avatar-img" src="img/avatar.png" alt="Avatar" style="max-width: 100%; max-height: 100%; object-fit: contain;">
+                    </div>
+                    <button class="nav-arrow right" id="avatar-next">&gt;</button>
+                </div>
+                <button id="btn-avatar-next" class="btn-primary" style="margin-top: 20px;">Confirmar Avatar</button>
+            </div>
+        </div>
+
+        <!-- TELA QUIZ 1 -->
+        <div id="screen-quiz-1" class="game-screen">
+            <div class="card text-center">
+                <span class="quiz-badge">Quiz</span>
+                <h1 class="quiz-question">Você consegue explicar para um amigo novo por que usa o aparelho?</h1>
+                <div class="quiz-options-container">
+                    <button class="btn-quiz" onclick="nextQuiz(1)">Sim, explico que é para ouvir melhor</button>
+                    <button class="btn-quiz" onclick="nextQuiz(1)">Tenho um pouco de vergonha, então prefiro que outra pessoa explique.</button>
+                    <button class="btn-quiz" onclick="nextQuiz(1)">Não gosto de falar disso</button>
+                </div>
+            </div>
+        </div>
+
+        <!-- TELA QUIZ 2 -->
+        <div id="screen-quiz-2" class="game-screen">
+            <div class="card text-center">
+                <span class="quiz-badge">Quiz</span>
+                <h1 class="quiz-question">Se o seu aparelho parar de funcionar na escola, o que você faz?</h1>
+                <div class="quiz-options-container">
+                    <button class="btn-quiz" onclick="nextQuiz(2)">Aviso o professor</button>
+                    <button class="btn-quiz" onclick="nextQuiz(2)">Fico quieto e espero ir para a casa</button>
+                </div>
+            </div>
+        </div>
+
+        <!-- TELA QUIZ 3 -->
+        <div id="screen-quiz-3" class="game-screen">
+            <div class="card text-center">
+                <span class="quiz-badge">Quiz</span>
+                <h1 class="quiz-question">Você sabe limpar ou carregar a bateria do seu aparelho sozinho?</h1>
+                <div class="quiz-options-container">
+                    <button class="btn-quiz" onclick="finishQuiz()">Sim, tudo</button>
+                    <button class="btn-quiz" onclick="finishQuiz()">Só algumas coisas</button>
+                    <button class="btn-quiz" onclick="finishQuiz()">Preciso de ajuda</button>
+                </div>
+            </div>
+        </div>
+
+        <!-- TELA DE NÍVEIS -->
+        <div id="screen-levels" class="game-screen">
+            <div class="bg-layer bg-ceu"></div>
+            <div class="bg-layer bg-chao"></div>
+            
+            <img src="img/nuvens.png" alt="Nuvens" class="scenery-asset asset-nuvens">
+            <img src="img/nuvem-sol.png" alt="Sol com Nuvem" class="scenery-asset asset-sol">
+
+            <img src="img/arvore.png" alt="Árvore Longe Esquerda" class="scenery-asset arvore tree-far tree-far-left">
+            <img src="img/arvore.png" alt="Árvore Longe Direita" class="scenery-asset arvore tree-far tree-far-right">
+            <img src="img/arvore.png" alt="Árvore Média Direita" class="scenery-asset arvore tree-mid tree-mid-right">
+            <img src="img/arvore.png" alt="Árvore Perto Esquerda" class="scenery-asset arvore tree-close tree-close-left">
+
+            <div class="levels-header">
+                <div class="user-avatar-slot">
+                    <img id="header-avatar-img" src="img/avatar.png" alt="Avatar Jogador">
+                </div>
+                <span id="header-player-name" class="player-name-badge">seu nome</span>
+            </div>
+
+            <div class="levels-grid-container">
+                <div class="levels-grid">
+                    <button class="level-card level-1" onclick="startLevel(1)">1</button>
+                    <button class="level-card level-2" onclick="startLevel(2)">2</button>
+                    <button class="level-card level-3" onclick="startLevel(3)">3</button>
+                    <button class="level-card level-4" onclick="startLevel(4)">4</button>
+                </div>
+            </div>
+        </div>
+
+        <!-- TELA NÍVEL 1 - ETAPA 1: RECONHECER PEÇAS (PERGUNTA INTERATIVA) -->
+        <div id="screen-level1-parts" class="game-screen">
+            <div class="card text-center card-gameplay">
+                <div class="gameplay-header">
+                    <button class="btn-back-small" onclick="backToLevels()">🔙 Mapa</button>
+                </div>
+                <h2 id="level1-question-title" class="gameplay-question-title">Qual é o nome da parte destacada?</h2>
+                
+                <div class="device-diagram-container">
+                    <img id="level1-diagram-img" src="" alt="Dispositivo Auditivo" class="diagram-img">
+                    <!-- Elemento que aponta visualmente para a parte da imagem -->
+                    <div id="part-pointer" class="part-pointer"></div>
+                </div>
+
+                <!-- Botões com nomes para o jogador selecionar -->
+                <div id="level1-parts-buttons" class="quiz-options-container"></div>
+            </div>
+        </div>
+
+        <!-- TELA NÍVEL 1 - ETAPA 2: ONDE GUARDAR -->
+        <div id="screen-level1-storage" class="game-screen">
+            <div class="card text-center card-gameplay">
+                <div class="gameplay-header">
+                    <button class="btn-back-small" onclick="backToLevels()">🔙 Mapa</button>
+                </div>
+                <h2 class="gameplay-question-title">Onde guardar meu aparelho?</h2>
+                <div class="storage-grid">
+                    <button class="storage-card" onclick="selectStorage('estojo', true)">
+                        <img src="img/Estojo.png" alt="Estojo" class="storage-img">
+                        <span>estojo</span>
+                    </button>
+                    <button class="storage-card" onclick="selectStorage('janela', false)">
+                        <img src="img/Janela.png" alt="Janela" class="storage-img">
+                        <span>janela</span>
+                    </button>
+                    <button class="storage-card" onclick="selectStorage('cama', false)">
+                        <img src="img/Cama.png" alt="Cama" class="storage-img">
+                        <span>cama</span>
+                    </button>
+                    <button class="storage-card" onclick="selectStorage('pia do banheiro', false)">
+                        <img src="img/pia.png" alt="Pia do banheiro" class="storage-img">
+                        <span>pia do banheiro</span>
+                    </button>
+                </div>
+            </div>
+        </div>
+
+        <!-- TELA NÍVEL 1 - ETAPA 3: PROTEGER DA CHUVA -->
+        <div id="screen-level1-rain" class="game-screen">
+            <div class="card text-center card-gameplay">
+                <div class="gameplay-header">
+                    <button class="btn-back-small" onclick="backToLevels()">🔙 Mapa</button>
+                </div>
+                <h2 class="gameplay-question-title">O que usar para proteger o aparelho contra uma chuva?</h2>
+                <div class="rain-options-grid">
+                    <button class="rain-card" onclick="selectRainProtection('guarda-chuva', true)">
+                        <img src="img/guarda-chuva.png" alt="Guarda-chuva" class="rain-img">
+                        <span>guarda-chuva</span>
+                    </button>
+                    <button class="rain-card" onclick="selectRainProtection('boné', false)">
+                        <img src="img/bone.png" alt="Boné" class="rain-img">
+                        <span>boné</span>
+                    </button>
+                    <button class="rain-card" onclick="selectRainProtection('suas mãos', false)">
+                        <img src="img/maozinha.png" alt="Suas mãos" class="rain-img">
+                        <span>suas mãos</span>
+                    </button>
+                </div>
+            </div>
+        </div>
+
+    </div>
+
+    <script src="main.js"></script>
+</body>
+</html>
