@@ -525,12 +525,12 @@ h1 {
 .asset-sol {
     top: 2%;
     right: 12%;
-    width: 230px;
+    width: 400px;
     z-index: 3;
 }
 
 .asset-nuvens {
-    top: 8%;
+    top: 30%;
     left: -2%;
     width: 450px;
     z-index: 3;
