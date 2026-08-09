@@ -136,29 +136,34 @@
             </div>
         </div>
 
-        <!-- TELA NÍVEL 1 - ETAPA 1: RECONHECER PEÇAS (PERGUNTA INTERATIVA) -->
+        <!-- TELA DE ENTRADA DO NÍVEL 1 -->
+        <div id="screen-level1-entry" class="game-screen">
+            <div class="card text-center">
+                <h1>NÍVEL 1</h1>
+                <div class="options-container">
+                    <button class="btn-sim" onclick="goToLevel1Parts()">começar</button>
+                    <button class="btn-nao" onclick="backToLevels('screen-level1-entry')">voltar</button>
+                </div>
+            </div>
+        </div>
+
+        <!-- TELA NÍVEL 1 - ETAPA 1: RECONHECER PEÇAS -->
         <div id="screen-level1-parts" class="game-screen">
             <div class="card text-center card-gameplay">
-                <div class="gameplay-header">
-                </div>
                 <h2 id="level1-question-title" class="gameplay-question-title">Qual é o nome da parte destacada?</h2>
                 
                 <div class="device-diagram-container">
                     <img id="level1-diagram-img" src="" alt="Dispositivo Auditivo" class="diagram-img">
-                    <!-- Elemento que aponta visualmente para a parte da imagem -->
                     <div id="part-pointer" class="part-pointer"></div>
                 </div>
 
-                <!-- Botões com nomes para o jogador selecionar -->
                 <div id="level1-parts-buttons" class="quiz-options-container"></div>
             </div>
         </div>
 
-        <!-- TELA NÍVEL 1 - ETAPA 2: ONDE GUARDAR (ATUALIZADA) -->
+        <!-- TELA NÍVEL 1 - ETAPA 2: ONDE GUARDAR -->
         <div id="screen-level1-storage" class="game-screen">
             <div class="card text-center card-gameplay">
-                <div class="gameplay-header">
-                </div>
                 <h2 class="gameplay-question-title">Onde guardar meu aparelho?</h2>
                 <div class="storage-grid">
                     <button class="storage-card" onclick="selectStorage(this, true)">
@@ -181,11 +186,9 @@
             </div>
         </div>
 
-        <!-- TELA NÍVEL 1 - ETAPA 3: PROTEGER DA CHUVA (ATUALIZADA) -->
+        <!-- TELA NÍVEL 1 - ETAPA 3: PROTEGER DA CHUVA -->
         <div id="screen-level1-rain" class="game-screen">
             <div class="card text-center card-gameplay">
-                <div class="gameplay-header">
-                </div>
                 <h2 class="gameplay-question-title">O que usar para proteger o aparelho contra uma chuva?</h2>
                 <div class="rain-options-grid">
                     <button class="rain-card" onclick="selectRainProtection(this, true)">
@@ -200,6 +203,155 @@
                         <img src="img/maozinha.png" alt="Suas mãos" class="rain-img">
                         <span>suas mãos</span>
                     </button>
+                </div>
+            </div>
+        </div>
+
+        <!-- TELA DE ENTRADA DO NÍVEL 2 -->
+        <div id="screen-level2-entry" class="game-screen">
+            <div class="card text-center">
+                <h1>NÍVEL 2</h1>
+                <div class="options-container">
+                    <button class="btn-sim" onclick="goToLevel2Scenario1()">começar</button>
+                    <button class="btn-nao" onclick="backToLevels('screen-level2-entry')">voltar</button>
+                </div>
+            </div>
+        </div>
+
+        <!-- TELA NÍVEL 2 - ETAPA 1: FALA INCOMPREENDIDA -->
+        <div id="screen-level2-speech" class="game-screen">
+            <div class="card text-center card-gameplay">
+                <h2 class="gameplay-question-title">Você não entendeu o que alguém disse, o que fazer?</h2>
+                <div class="speech-img-container">
+                    <img src="img/falando.png" alt="Fala incompreendida" class="speech-img">
+                </div>
+                <div class="quiz-options-container">
+                    <button class="btn-quiz" onclick="selectSpeechOption(this, false)">Fingir que entendeu</button>
+                    <button class="btn-quiz" onclick="selectSpeechOption(this, true)">Pedir para repetir</button>
+                    <button class="btn-quiz" onclick="selectSpeechOption(this, false)">Ficar em silêncio</button>
+                </div>
+            </div>
+        </div>
+
+        <!-- TELA NÍVEL 2 - ETAPA 2: SOM DA TV -->
+        <div id="screen-level2-tv" class="game-screen">
+            <div class="card text-center card-gameplay">
+                <h2 class="gameplay-question-title">O som da tv está muito alto e não dá para ouvir os outros, o que fazer?</h2>
+                <div class="tv-img-container">
+                    <img src="img/tv.png" alt="TV" class="tv-img">
+                </div>
+                <div class="tv-options-grid">
+                    <button class="tv-card" onclick="selectTvOption(this, true)">
+                        <img src="img/controle.png" alt="Baixar o volume" class="tv-option-img">
+                        <span>baixar o volume</span>
+                    </button>
+                    <button class="tv-card" onclick="selectTvOption(this, false)">
+                        <img src="img/nada.png" alt="Não fazer nada" class="tv-option-img">
+                        <span>não fazer nada</span>
+                    </button>
+                    <button class="tv-card" onclick="selectTvOption(this, false)">
+                        <img src="img/saida.png" alt="Sair do lugar" class="tv-option-img">
+                        <span>sair do lugar</span>
+                    </button>
+                </div>
+            </div>
+        </div>
+
+        <!-- ETAPA NOVA DO NÍVEL 2: PERGUNTA DO AMIGO -->
+        <div id="screen-level2-friend" class="game-screen">
+            <div class="card text-center card-gameplay">
+                <h2 class="gameplay-question-title">Um amigo te pergunta o que é isso na sua orelha, o que responder?</h2>
+                <div class="speech-img-container">
+                    <img src="img/menino-perguntando.png" alt="Amigo em dúvida" class="speech-img">
+                </div>
+                <div class="quiz-options-container">
+                    <button class="btn-quiz" onclick="selectFriendOption(this, true)">É um dispositivo que me ajuda a ouvir</button>
+                    <button class="btn-quiz" onclick="selectFriendOption(this, false)">Não é nada, deixa para lá</button>
+                    <button class="btn-quiz" onclick="selectFriendOption(this, false)">Ficar em silêncio</button>
+                </div>
+            </div>
+        </div>
+
+        <!-- TELA DE ENTRADA DO NÍVEL 3 -->
+        <div id="screen-level3-entry" class="game-screen">
+            <div class="card text-center">
+                <h1>NÍVEL 3</h1>
+                <div class="options-container entry-buttons">
+                    <button class="btn-entrada btn-sim" onclick="goToLevel3Scenario1()">começar</button>
+                    <button class="btn-entrada btn-nao" onclick="backToLevels('screen-level3-entry')">voltar</button>
+                </div>
+            </div>
+        </div>
+
+        <!-- TELA NÍVEL 3 - ETAPA 1: ONDE SENTAR -->
+        <div id="screen-level3-seating" class="game-screen">
+            <div class="card text-center card-gameplay">
+                <h2 class="gameplay-question-title">O professor vai explicar uma matéria importante, onde sentar?</h2>
+                <div class="diagram-diagram-container">
+                    <img src="img/sala.png" alt="Sala de aula" class="diagram-img">
+                </div>
+                <div class="quiz-options-container">
+                    <button class="btn-quiz" onclick="selectSeatingOption(this, true)">Na frente, perto do professor</button>
+                    <button class="btn-quiz" onclick="selectSeatingOption(this, false)">No meio, perto da janela</button>
+                    <button class="btn-quiz" onclick="selectSeatingOption(this, false)">No fundo</button>
+                </div>
+            </div>
+        </div>
+
+        <!-- TELA PRINCIPAL: BATERIA ACABOU (CENA INTERATIVA) -->
+        <div id="screen-level3-battery" class="game-screen">
+            <div class="card text-center card-gameplay">
+                <h2 class="gameplay-question-title">A bateria do aparelho acabou no meio da explicação da prova, o que fazer?</h2>
+                <div class="interactive-scene-container">
+                    <!-- Imagem da Lousa no fundo -->
+                    <img src="img/lousa.png" class="bg-lousa" alt="Lousa">
+
+                    <!-- Objetos Clicáveis -->
+                    <img src="img/professora-em-pe.png" class="clickable-obj obj-professora" onclick="navigateToScene('screen-level3-professora')" alt="Professora">
+                    <img src="img/mochila.png" class="clickable-obj obj-mochila" onclick="navigateToScene('screen-level3-mochila')" alt="Mochila">
+                    <img src="img/carteira.png" class="clickable-obj obj-carteira" onclick="navigateToScene('screen-level3-continuar')" alt="Carteira">
+                </div>
+            </div>
+        </div>
+
+        <!-- CENA PROFESSORA -->
+        <div id="screen-level3-professora" class="game-screen">
+            <div class="card text-center card-gameplay">
+                <h2 class="gameplay-question-title">O que falar para a professora?</h2>
+                <div class="diagram-diagram-container">
+                    <img src="img/professora-em-pe.png" alt="Professora" class="diagram-img">
+                </div>
+                <div class="quiz-options-container">
+                    <button class="btn-quiz" onclick="handleOptionChoice(this, true)">Pedir para ela explicar de novo para você depois</button>
+                    <button class="btn-quiz" onclick="handleOptionChoice(this, false)">Desistir de falar com ela</button>
+                </div>
+            </div>
+        </div>
+
+        <!-- CENA MOCHILA -->
+        <div id="screen-level3-mochila" class="game-screen">
+            <div class="card text-center card-gameplay">
+                <h2 class="gameplay-question-title">Você foi procurar uma forma carregar ele e acharam que você estava colando, o que fazer?</h2>
+                <div class="diagram-diagram-container">
+                    <img src="img/mochila.png" alt="Mochila" class="diagram-img">
+                </div>
+                <div class="quiz-options-container">
+                    <button class="btn-quiz" onclick="handleOptionChoice(this, true)">Explicar que a bateria do aparelho acabou e você precisa carregar ele</button>
+                    <button class="btn-quiz" onclick="handleOptionChoice(this, false)">Ficar em silêncio</button>
+                </div>
+            </div>
+        </div>
+
+        <!-- CENA CONTINUAR / CARTEIRA -->
+        <div id="screen-level3-continuar" class="game-screen">
+            <div class="card text-center card-gameplay">
+                <h2 class="gameplay-question-title">Você ainda não entendeu a prova, o que fazer?</h2>
+                <div class="diagram-diagram-container">
+                    <img src="img/carteira-de-cima.png" alt="Prova" class="diagram-img">
+                </div>
+                <div class="quiz-options-container">
+                    <button class="btn-quiz" onclick="handleOptionChoice(this, false)">Chutar as respostas e entregar correndo</button>
+                    <button class="btn-quiz" onclick="handleOptionChoice(this, true)">Chamar a professora</button>
                 </div>
             </div>
         </div>
