@@ -698,6 +698,22 @@ h1 {
     outline: none;
 }
 
+/* Estilo para as fases bloqueadas */
+.level-card.locked {
+    background-color: #EFEFEF !important;
+    border-color: #D9D9D9 !important;
+    box-shadow: 0 10px 0 #CCCCCC !important;
+    cursor: not-allowed !important;
+    transform: none !important;
+}
+
+.level-card.locked img.lock-icon {
+    width: 50%;
+    height: 50%;
+    object-fit: contain;
+    pointer-events: none;
+}
+
 .level-card:hover {
     transform: translateY(-4px);
     background-color: #EDFCFF;

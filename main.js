@@ -4,7 +4,8 @@ document.addEventListener('DOMContentLoaded', () => {
         device: 'a', // 'a' = Aparelho Auditivo, 'i' = Implante Coclear
         name: '',
         avatarList: [],
-        avatarIndex: 0
+        avatarIndex: 0,
+        maxUnlockedLevel: 4 // Por padrão, todas as fases ficam abertas
     };
 
     let precisaDeQuiz = false;
@@ -119,6 +120,21 @@ document.addEventListener('DOMContentLoaded', () => {
         document.querySelectorAll('.game-screen').forEach(s => s.classList.remove('active'));
     }
 
+    function updateLevelsUI() {
+        for (let i = 1; i <= 4; i++) {
+            const btn = document.querySelector(`.level-${i}`);
+            if (!btn) continue;
+
+            if (i > gameState.maxUnlockedLevel) {
+                btn.classList.add('locked');
+                btn.innerHTML = `<img src="img/cadeado.png" alt="Bloqueado" class="lock-icon">`;
+            } else {
+                btn.classList.remove('locked');
+                btn.textContent = i;
+            }
+        }
+    }
+
     function goToLevelsScreen() {
         hideAllScreens();
         headerPlayerName.textContent = gameState.name || 'Jogador';
@@ -127,6 +143,8 @@ document.addEventListener('DOMContentLoaded', () => {
             headerAvatarImg.src = `img/${finalAvatar.filename}`;
         }
         headerAvatarImg.onerror = function() { this.src = "img/avatar.png"; };
+        
+        updateLevelsUI();
         screenLevels.classList.add('active');
     }
 
@@ -140,12 +158,14 @@ document.addEventListener('DOMContentLoaded', () => {
     btnWelcomeYes.addEventListener('click', () => {
         precisaDeQuiz = false;
         gameState.alreadyPlayed = true;
+        gameState.maxUnlockedLevel = 4; // Desbloqueia todas as fases se já jogou antes
         changeScreen(screenWelcome, screenDevice);
     });
 
     btnWelcomeNo.addEventListener('click', () => {
         precisaDeQuiz = true;
         gameState.alreadyPlayed = false;
+        gameState.maxUnlockedLevel = 1; // Deixa apenas a fase 1 desbloqueada
         changeScreen(screenWelcome, screenDevice);
     });
 
@@ -216,6 +236,8 @@ document.addEventListener('DOMContentLoaded', () => {
 
     // --- SELEÇÃO DE NÍVEIS NO MAPA ---
     window.startLevel = function(levelNumber) {
+        if (levelNumber > gameState.maxUnlockedLevel) return; // Bloqueia o clique nas fases travadas
+
         hideAllScreens();
         if (levelNumber === 1) {
             screenLevel1Entry.classList.add('active');
@@ -311,6 +333,10 @@ document.addEventListener('DOMContentLoaded', () => {
             btnElement.classList.add('correct-answer');
             setTimeout(() => {
                 btnElement.classList.remove('correct-answer');
+                // Desbloqueia o Nível 2 ao concluir o Nível 1
+                if (gameState.maxUnlockedLevel < 2) {
+                    gameState.maxUnlockedLevel = 2;
+                }
                 goToLevelsScreen();
             }, 1200);
         } else {
@@ -370,6 +396,10 @@ document.addEventListener('DOMContentLoaded', () => {
             btnElement.classList.add('correct-answer');
             setTimeout(() => {
                 btnElement.classList.remove('correct-answer');
+                // Desbloqueia o Nível 3 ao concluir o Nível 2
+                if (gameState.maxUnlockedLevel < 3) {
+                    gameState.maxUnlockedLevel = 3;
+                }
                 goToLevelsScreen();
             }, 1200);
         } else {
@@ -385,7 +415,6 @@ document.addEventListener('DOMContentLoaded', () => {
         changeScreen(screenLevel3Entry, document.getElementById('screen-level3-seating'));
     };
 
-    // Etapa 1: Escolha de onde sentar -> Transição direta para a Etapa 2 (Cena Interativa)
     window.selectSeatingOption = function(btnElement, isCorrect) {
         const allBtns = document.querySelectorAll('#screen-level3-seating .btn-quiz');
         allBtns.forEach(btn => btn.classList.remove('correct-answer', 'wrong-answer'));
@@ -407,7 +436,6 @@ document.addEventListener('DOMContentLoaded', () => {
         }
     };
 
-    // Etapa 2: Navegação clicando nos objetos da cena interativa (Professora, Mochila, Carteira)
     window.navigateToScene = function(targetScreenId) {
         const currentActive = document.querySelector('.game-screen.active');
         const targetScreen = document.getElementById(targetScreenId);
@@ -416,7 +444,6 @@ document.addEventListener('DOMContentLoaded', () => {
         }
     };
 
-    // Etapa 2: Resposta final de cada subcenário do Nível 3
     window.handleOptionChoice = function(btnElement, isCorrect) {
         const parent = btnElement.parentElement;
         const allBtns = parent.querySelectorAll('.btn-quiz');
@@ -426,7 +453,11 @@ document.addEventListener('DOMContentLoaded', () => {
             btnElement.classList.add('correct-answer');
             setTimeout(() => {
                 btnElement.classList.remove('correct-answer');
-                goToLevelsScreen(); // Conclui a etapa e retorna ao mapa de níveis
+                // Desbloqueia o Nível 4 ao concluir o Nível 3
+                if (gameState.maxUnlockedLevel < 4) {
+                    gameState.maxUnlockedLevel = 4;
+                }
+                goToLevelsScreen();
             }, 1200);
         } else {
             btnElement.classList.add('wrong-answer');
