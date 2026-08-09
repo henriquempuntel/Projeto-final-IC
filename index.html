@@ -117,7 +117,6 @@
             <img src="img/nuvens.png" alt="Nuvens" class="scenery-asset asset-nuvens">
             <img src="img/nuvem-sol.png" alt="Sol com Nuvem" class="scenery-asset asset-sol">
 
-            
             <img src="img/arvore.png" alt="Árvore Perto Esquerda" class="scenery-asset arvore tree-close tree-close-left">
 
             <div class="levels-header">
@@ -141,7 +140,6 @@
         <div id="screen-level1-parts" class="game-screen">
             <div class="card text-center card-gameplay">
                 <div class="gameplay-header">
-                    <button class="btn-back-small" onclick="backToLevels()">🔙 Mapa</button>
                 </div>
                 <h2 id="level1-question-title" class="gameplay-question-title">Qual é o nome da parte destacada?</h2>
                 
@@ -156,27 +154,26 @@
             </div>
         </div>
 
-        <!-- TELA NÍVEL 1 - ETAPA 2: ONDE GUARDAR -->
+        <!-- TELA NÍVEL 1 - ETAPA 2: ONDE GUARDAR (ATUALIZADA) -->
         <div id="screen-level1-storage" class="game-screen">
             <div class="card text-center card-gameplay">
                 <div class="gameplay-header">
-                    <button class="btn-back-small" onclick="backToLevels()">🔙 Mapa</button>
                 </div>
                 <h2 class="gameplay-question-title">Onde guardar meu aparelho?</h2>
                 <div class="storage-grid">
-                    <button class="storage-card" onclick="selectStorage('estojo', true)">
+                    <button class="storage-card" onclick="selectStorage(this, true)">
                         <img src="img/Estojo.png" alt="Estojo" class="storage-img">
                         <span>estojo</span>
                     </button>
-                    <button class="storage-card" onclick="selectStorage('janela', false)">
+                    <button class="storage-card" onclick="selectStorage(this, false)">
                         <img src="img/Janela.png" alt="Janela" class="storage-img">
                         <span>janela</span>
                     </button>
-                    <button class="storage-card" onclick="selectStorage('cama', false)">
+                    <button class="storage-card" onclick="selectStorage(this, false)">
                         <img src="img/Cama.png" alt="Cama" class="storage-img">
                         <span>cama</span>
                     </button>
-                    <button class="storage-card" onclick="selectStorage('pia do banheiro', false)">
+                    <button class="storage-card" onclick="selectStorage(this, false)">
                         <img src="img/pia.png" alt="Pia do banheiro" class="storage-img">
                         <span>pia do banheiro</span>
                     </button>
@@ -184,23 +181,22 @@
             </div>
         </div>
 
-        <!-- TELA NÍVEL 1 - ETAPA 3: PROTEGER DA CHUVA -->
+        <!-- TELA NÍVEL 1 - ETAPA 3: PROTEGER DA CHUVA (ATUALIZADA) -->
         <div id="screen-level1-rain" class="game-screen">
             <div class="card text-center card-gameplay">
                 <div class="gameplay-header">
-                    <button class="btn-back-small" onclick="backToLevels()">🔙 Mapa</button>
                 </div>
                 <h2 class="gameplay-question-title">O que usar para proteger o aparelho contra uma chuva?</h2>
                 <div class="rain-options-grid">
-                    <button class="rain-card" onclick="selectRainProtection('guarda-chuva', true)">
+                    <button class="rain-card" onclick="selectRainProtection(this, true)">
                         <img src="img/guarda-chuva.png" alt="Guarda-chuva" class="rain-img">
                         <span>guarda-chuva</span>
                     </button>
-                    <button class="rain-card" onclick="selectRainProtection('boné', false)">
+                    <button class="rain-card" onclick="selectRainProtection(this, false)">
                         <img src="img/bone.png" alt="Boné" class="rain-img">
                         <span>boné</span>
                     </button>
-                    <button class="rain-card" onclick="selectRainProtection('suas mãos', false)">
+                    <button class="rain-card" onclick="selectRainProtection(this, false)">
                         <img src="img/maozinha.png" alt="Suas mãos" class="rain-img">
                         <span>suas mãos</span>
                     </button>

@@ -18,7 +18,7 @@ document.addEventListener('DOMContentLoaded', () => {
             questions: [
                 {
                     partName: 'Molde auricular',
-                    pointerTop: '75%',   // Ajuste este valor (altura na imagem)
+                    pointerTop: '80%',   // Ajuste este valor (altura na imagem)
                     pointerLeft: '20%',  // Ajuste este valor (largura na imagem)
                     options: ['Molde auricular', 'Compartimento de Bateria', 'Tubo', 'Microfone']
                 },
@@ -197,81 +197,118 @@ document.addEventListener('DOMContentLoaded', () => {
     };
 
     // --- LÓGICA DO NÍVEL 1 (APONTADOR DE PEÇA E ESCOLHA DO NOME) ---
-window.startLevel = function(levelNumber) {
-    if (levelNumber === 1) {
-        currentPartIndex = 0;
-        startLevel1Question();
-    }
-};
-
-function startLevel1Question() {
-    hideAllScreens();
-
-    const data = level1Data[gameState.device] || level1Data['a'];
-    const currentQuestion = data.questions[currentPartIndex];
-
-    const diagramImg = document.getElementById('level1-diagram-img');
-    const pointer = document.getElementById('part-pointer');
-    const buttonsContainer = document.getElementById('level1-parts-buttons');
-
-    diagramImg.src = data.diagramImg;
-    diagramImg.onerror = function() {
-        this.src = data.fallbackImg;
+    window.startLevel = function(levelNumber) {
+        if (levelNumber === 1) {
+            currentPartIndex = 0;
+            startLevel1Question();
+        }
     };
 
-    pointer.style.top = currentQuestion.pointerTop;
-    pointer.style.left = currentQuestion.pointerLeft;
+    function startLevel1Question() {
+        hideAllScreens();
 
-    buttonsContainer.innerHTML = '';
+        const data = level1Data[gameState.device] || level1Data['a'];
+        const currentQuestion = data.questions[currentPartIndex];
 
-    const shuffledOptions = [...currentQuestion.options].sort(() => Math.random() - 0.5);
+        const diagramImg = document.getElementById('level1-diagram-img');
+        const pointer = document.getElementById('part-pointer');
+        const buttonsContainer = document.getElementById('level1-parts-buttons');
 
-    shuffledOptions.forEach(optionText => {
-        const btn = document.createElement('button');
-        btn.className = 'btn-quiz';
-        btn.textContent = optionText;
+        diagramImg.src = data.diagramImg;
+        diagramImg.onerror = function() {
+            this.src = data.fallbackImg;
+        };
 
-        btn.addEventListener('click', () => {
-            if (optionText === currentQuestion.partName) {
-                currentPartIndex++;
-                
-                if (currentPartIndex < data.questions.length) {
-                    startLevel1Question();
+        pointer.style.top = currentQuestion.pointerTop;
+        pointer.style.left = currentQuestion.pointerLeft;
+
+        buttonsContainer.innerHTML = '';
+
+        const shuffledOptions = [...currentQuestion.options].sort(() => Math.random() - 0.5);
+
+        shuffledOptions.forEach(optionText => {
+            const btn = document.createElement('button');
+            btn.className = 'btn-quiz';
+            btn.textContent = optionText;
+
+            btn.addEventListener('click', () => {
+                if (optionText === currentQuestion.partName) {
+                    // Acertou: fica verde
+                    btn.classList.add('correct-answer');
+                    
+                    setTimeout(() => {
+                        currentPartIndex++;
+                        if (currentPartIndex < data.questions.length) {
+                            startLevel1Question();
+                        } else {
+                            changeScreen(screenLevel1Parts, screenLevel1Storage);
+                        }
+                    }, 600); // Aguarda o feedback visual verde antes de avançar
                 } else {
-                    // Passa para a Etapa 2 direto (sem alert)
-                    changeScreen(screenLevel1Parts, screenLevel1Storage);
+                    // Errou: fica vermelho e depois volta ao normal
+                    btn.classList.add('wrong-answer');
+                    setTimeout(() => {
+                        btn.classList.remove('wrong-answer');
+                    }, 600);
                 }
-            } else {
-                // Efeito visual em caso de erro (pisca em vermelho rapidamente)
-                btn.style.borderColor = '#ff5241';
-                btn.style.backgroundColor = '#ffc9bd';
-                setTimeout(() => {
-                    btn.style.borderColor = '#9ef2ff';
-                    btn.style.backgroundColor = '#e2faff';
-                }, 500);
-            }
+            });
+
+            buttonsContainer.appendChild(btn);
         });
 
-        buttonsContainer.appendChild(btn);
-    });
+        screenLevel1Parts.classList.add('active');
+    }
 
-    screenLevel1Parts.classList.add('active');
-}
+ // --- ETAPA 2: ONDE GUARDAR O APARELHO ---
+window.selectStorage = function(btnElement, isCorrect) {
+    // Remove qualquer classe de acerto/erro anterior de todas as opções
+    const allCards = document.querySelectorAll('.storage-card');
+    allCards.forEach(card => card.classList.remove('correct-answer', 'wrong-answer'));
 
-// Etapa 2: Guarda no estojo
-window.selectStorage = function(optionName, isCorrect) {
     if (isCorrect) {
-        // Passa para a Etapa 3 direto (sem alert)
-        changeScreen(screenLevel1Storage, screenLevel1Rain);
+        // Marca o botão clicado em verde
+        btnElement.classList.add('correct-answer');
+        
+        // Aguarda 1.2 segundos para mostrar o verde e passa para a Etapa 3 (Chuva)
+        setTimeout(() => {
+            btnElement.classList.remove('correct-answer');
+            changeScreen(screenLevel1Storage, screenLevel1Rain);
+        }, 1200);
+    } else {
+        // Marca o botão clicado em vermelho
+        btnElement.classList.add('wrong-answer');
+        
+        // Remove o vermelho após 1 segundo para permitir tentar novamente
+        setTimeout(() => {
+            btnElement.classList.remove('wrong-answer');
+        }, 1000);
     }
 };
 
-// Etapa 3: Guarda-chuva
-window.selectRainProtection = function(optionName, isCorrect) {
+// --- ETAPA 3: PROTEÇÃO CONTRA A CHUVA ---
+window.selectRainProtection = function(btnElement, isCorrect) {
+    // Remove qualquer classe de acerto/erro anterior de todas as opções
+    const allCards = document.querySelectorAll('.rain-card');
+    allCards.forEach(card => card.classList.remove('correct-answer', 'wrong-answer'));
+
     if (isCorrect) {
-        // Conclui o Nível 1 e volta para o mapa de níveis direto (sem alert)
-        goToLevelsScreen();
-        changeScreen(screenLevel1Rain, screenLevels);
+        // Marca o botão clicado em verde
+        btnElement.classList.add('correct-answer');
+        
+        // Aguarda 1.2 segundos para mostrar o verde e volta para a tela do mapa
+        setTimeout(() => {
+            btnElement.classList.remove('correct-answer');
+            goToLevelsScreen();
+            changeScreen(screenLevel1Rain, screenLevels);
+        }, 1200);
+    } else {
+        // Marca o botão clicado em vermelho
+        btnElement.classList.add('wrong-answer');
+        
+        // Remove o vermelho após 1 segundo para permitir tentar novamente
+        setTimeout(() => {
+            btnElement.classList.remove('wrong-answer');
+        }, 1000);
     }
 };
 });

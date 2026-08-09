@@ -256,8 +256,8 @@ h1 {
 
 .device-option:hover, .device-option.selected {
     transform: scale(1.05);
-    background: #dbf8fc;
-    border-color: #00b029;
+    background: #dbe7ff;
+    border-color: #4685c9;
 }
 
 .device-option img {
@@ -524,8 +524,8 @@ h1 {
 
 .asset-sol {
     top: 2%;
-    right: 12%;
-    width: 400px;
+    right: 5%;
+    width: 500px;
     z-index: 3;
 }
 
@@ -638,6 +638,45 @@ h1 {
 .level-card:active {
     transform: translateY(6px);
     box-shadow: 0 4px 0 #58D2EC;
+}
+
+
+.btn-quiz.correct-answer,
+.option-item.correct-answer,
+.storage-card.correct-answer,
+.rain-card.correct-answer {
+    background-color: #c9f9cb !important;
+    border-color: #00d632 !important;
+    color: #00b029 !important;
+    transform: scale(1.05);
+}
+
+.storage-card.correct-answer span,
+.rain-card.correct-answer span {
+    color: #00b029 !important;
+}
+
+/* Resposta Errada (Vermelha) */
+.btn-quiz.wrong-answer,
+.option-item.wrong-answer,
+.storage-card.wrong-answer,
+.rain-card.wrong-answer {
+    background-color: #ffc9bd !important;
+    border-color: #ff6859 !important;
+    color: #ff5241 !important;
+    animation: shakeError 0.3s ease-in-out;
+}
+
+.storage-card.wrong-answer span,
+.rain-card.wrong-answer span {
+    color: #ff5241 !important;
+}
+
+/* Efeito de tremor suave ao errar */
+@keyframes shakeError {
+    0%, 100% { transform: translateX(0); }
+    20%, 60% { transform: translateX(-8px); }
+    40%, 80% { transform: translateX(8px); }
 }
 
 /* RESPONSIVIDADE MOBILE */
