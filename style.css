@@ -205,25 +205,25 @@ h1 {
     max-width: 500px;
     padding: 18px 25px;
     font-size: 1.8rem;
-    border: 4px solid #0b4ca0;
+    border: 5px solid #78F2FF;
     border-radius: 24px;
     text-align: center;
     color: #0b4ca0;
     font-weight: bold;
+    box-shadow: 0 10px 0 #78F2FF;
     outline: none;
     background-color: white;
 }
 
 .btn-primary {
-    background-color: #0b4ca0;
+    margin-top: 20px;
+    background-color: #1054ae;
     color: white;
-    border: none;
     padding: 18px 60px;
     font-size: 1.5rem;
     border-radius: 30px;
     font-weight: bold;
     cursor: pointer;
-    box-shadow: 0 6px 0 #052d63;
     transition: transform 0.1s, box-shadow 0.1s;
 }
 
@@ -255,8 +255,8 @@ h1 {
 
 .device-option:hover, .device-option.selected {
     transform: scale(1.05);
-    background: #dbe7ff;
-    border-color: #4685c9;
+    background: #eef1f6;
+    
 }
 
 .device-option img {
@@ -292,8 +292,8 @@ h1 {
 }
 
 .nav-arrow {
-    background: #0b4ca0;
-    color: white;
+    background: #C7F7FF;
+    color: #0b4ca0;
     border: none;
     width: 60px;
     height: 60px;
@@ -304,7 +304,9 @@ h1 {
     display: flex;
     justify-content: center;
     align-items: center;
-    box-shadow: 0 4px 0 #052d63;
+    box-shadow: 0 8px 0 #78F2FF;
+    border: 8px solid #78F2FF;
+  
 }
 
 /* ESTILIZAÇÃO DO QUIZ */
@@ -696,114 +698,6 @@ h1 {
     outline: none;
 }
 
-/* Container da Cena Interativa */
-.interactive-scene-container {
-    position: relative;
-    width: 100%;
-    max-width: 480px;
-    height: 380px;
-    margin: 0 auto;
-    background-color: #ffffff;
-    border-radius: 12px;
-    overflow: hidden;
-}
-
-/* Objetos clicáveis na cena */
-.clickable-obj {
-    position: absolute;
-    cursor: pointer;
-    transition: transform 0.2s ease, filter 0.2s ease;
-}
-
-.clickable-obj:hover {
-    transform: scale(1.05);
-    filter: brightness(1.1);
-}
-
-/* Posicionamento individual de cada objeto */
-.obj-professora {
-    right: 10%;
-    bottom: 15%;
-    height: 65%;
-    z-index: 1;
-}
-
-.obj-mochila {
-    left: 5%;
-    bottom: 5%;
-    width: 20%;
-    z-index: 2;
-}
-
-.obj-carteira {
-    right: 5%;
-    bottom: 5%;
-    width: 60%;
-    z-index: 3;
-}
-
-/* Container da Cena Interativa com fundo Parede (#F7FEFF) e Chão (#93F0FF) */
-.interactive-scene-container {
-    position: relative;
-    width: 100%;
-    max-width: 480px;
-    height: 500px;
-    margin: 0 auto;
-    border-radius: 12px;
-    overflow: hidden;
-    /* Divide a altura: 65% Parede e 35% Chão */
-    background: linear-gradient(to bottom, #F7FEFF 65%, #93F0FF 65%);
-    border: 5px solid #78F2FF;
-}
-
-/* Posição da imagem da Lousa centralizada na parede */
-.bg-lousa {
-    position: absolute;
-    top: 10%;
-    left: 50%;
-    transform: translateX(-50%);
-    width: 82%;
-    height: auto;
-    max-height: 48%;
-    object-fit: contain;
-    z-index: 0;
-    pointer-events: none; /* Garante que a lousa não bloqueie o clique nos personagens */
-}
-
-/* Objetos clicáveis na cena */
-.clickable-obj {
-    position: absolute;
-    cursor: pointer;
-    transition: transform 0.2s ease, filter 0.2s ease;
-}
-
-.clickable-obj:hover {
-    transform: scale(1.04);
-    filter: drop-shadow(0 0 6px #78F2FF);
-}
-
-/* Ajustes de camadas e tamanhos */
-.obj-professora {
-    right: 8%;
-    bottom: 12%;
-    height: 68%;
-    z-index: 1;
-}
-
-.obj-mochila {
-    left: 6%;
-    bottom: 4%;
-    width: 36%;
-    z-index: 2;
-}
-
-.obj-carteira {
-    right: 2%;
-    bottom: 0%;
-    width: 62%;
-    z-index: 3;
-}
-
 .level-card:hover {
     transform: translateY(-4px);
     background-color: #EDFCFF;
@@ -819,6 +713,95 @@ h1 {
     border-radius: 16px;
     box-shadow: none !important;
     filter: none !important;
+}
+
+/* NÍVEL 3 - ETAPA 2 (CENA INTERATIVA DA SALA DE AULA) */
+
+/* Container da Cena Interativa com fundo Parede (#F7FEFF) e Chão (#93F0FF) */
+.interactive-scene-container {
+    position: relative;
+    width: 100%;
+    max-width: 480px;
+    height: 430px;
+    margin: 0 auto;
+    border-radius: 16px;
+    overflow: hidden;
+    /* Divide a altura: 65% Parede (#F7FEFF) e 35% Chão (#93F0FF) */
+    background: linear-gradient(to bottom, #F7FEFF 75%, #93F0FF 25%);
+    border: 5px solid #78F2FF;
+}
+
+/* Posição da imagem da Lousa centralizada na parede */
+.bg-lousa {
+    position: absolute;
+    top: 15%;
+    left: 50%;
+    transform: translateX(-50%);
+    width: 60%;
+    height: auto;
+    max-height: 48%;
+    object-fit: contain;
+    z-index: 0;
+    pointer-events: none; /* Garante que a lousa não bloqueie o clique nos objetos */
+}
+
+/* Objetos clicáveis na cena */
+.clickable-obj {
+    position: absolute;
+    cursor: pointer;
+    transition: transform 0.2s ease, filter 0.2s ease;
+}
+
+.clickable-obj:hover {
+    transform: scale(1.05);
+    filter: drop-shadow(0 0 8px #78F2FF);
+}
+
+/* Ajustes de camadas, tamanhos e posições */
+.obj-professora {
+    right: 8%;
+    bottom: 12%;
+    height: 70%;
+    z-index: 1;
+}
+
+.obj-mochila {
+    left: 12%;
+    bottom: 0%;
+    width: 30%; /* Mochila em tamanho proporcional reduzido */
+    height: auto;
+    z-index: 2;
+}
+
+.obj-carteira {
+    right: 2%;
+    bottom: 0%;
+    width: 60%;
+    z-index: 3;
+}
+
+/* Reduz o tamanho da mochila especificamente na tela do Level 3 */
+
+#screen-level3-mochila .diagram-diagram-container {
+    max-width: 250px; /* Reduza esse valor se quiser ainda menor (ex: 150px) */
+    height: auto;
+    margin: 0 auto 20px auto;
+}
+
+#screen-level3-mochila .diagram-img {
+    max-height: 250px; /* Limita a altura da imagem proporcionalmente */
+    object-fit: contain;
+}
+
+#screen-level3-professora .diagram-diagram-container {
+    max-width: 250px; /* Altere este valor para definir a largura máxima desejada */
+    height: auto;
+    margin: 0 auto 20px auto;
+}
+
+#screen-level3-professora .diagram-img {
+    max-height: 250px; /* Limita a altura da imagem proporcionalmente */
+    object-fit: contain;
 }
 
 /* CLASSES DE FEEDBACK (VERDE / VERMELHO) */
