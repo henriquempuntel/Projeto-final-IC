@@ -375,6 +375,37 @@
             </div>
         </div>
 
+        <!-- TELA DE ENTRADA DO NÍVEL 4 -->
+        <div id="screen-level4-entry" class="game-screen">
+            <div class="card text-center">
+                <h1>NÍVEL 4</h1>
+                <div class="options-container entry-buttons">
+                    <button class="btn-entrada btn-sim" onclick="proceedToLevel4Content()">começar</button>
+                    <button class="btn-entrada btn-nao" onclick="backToLevels('screen-level4-entry')">voltar</button>
+                </div>
+            </div>
+        </div>
+
+        <!-- TELA NÍVEL 4 - QUIZ DE AUTOADVOCACIA -->
+        <div id="screen-level4-quiz" class="game-screen">
+            <div class="card text-center card-gameplay">
+                <h2 id="l4-question-title" class="gameplay-question-title">Carregando pergunta...</h2>
+                <div id="l4-options-container" class="quiz-options-container"></div>
+                <p id="feedback-l4" class="feedback-explicacao"></p>
+            </div>
+        </div>
+
+        <!-- TELA DE PARABÉNS - CONCLUSÃO DOS NÍVEIS -->
+        <div id="screen-conclusion" class="game-screen">
+            <div class="card text-center">
+                <h1>Parabéns!</h1>
+                <p class="quiz-question">Você concluiu todos os níveis e aprendeu a cuidar do seu aparelho e a defender o que precisa. Você é o protagonista da sua própria jornada!</p>
+                <div class="options-container">
+                    <button class="btn-primary" onclick="voltarNiveisFinal()">Voltar para os níveis</button>
+                </div>
+            </div>
+        </div>
+
     </div>
 
     <script src="main.js"></script>
