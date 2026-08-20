@@ -862,7 +862,7 @@ h1 {
 }
 
 /* RESPONSIVIDADE MOBILE */
-@media (max-width: 768px) {
+/* @media (max-width: 768px) {
     h1 { font-size: 2rem; }
     .btn-sim, .btn-nao {
         font-size: 1.8rem !important;
@@ -877,4 +877,135 @@ h1 {
     .user-avatar-slot { width: 50px; height: 50px; }
     .player-name-badge { font-size: 1.4rem; }
     .level-card { font-size: 3.5rem; border-width: 8px; }
+} */
+ @media (max-width: 768px) {
+    body, html { overflow-y: auto; }
+
+    h1 { font-size: 2rem; }
+
+    .gameplay-question-title { font-size: 1.3rem; }
+
+    .quiz-question { font-size: 1.3rem; }
+
+    .btn-quiz { font-size: 1.1rem; padding: 12px 15px; }
+
+    .btn-sim, .btn-nao {
+        font-size: 1.8rem !important;
+        padding: 15px 50px !important;
+        width: 100%;
+        max-width: 280px;
+    }
+
+    .card { padding: 25px 15px; border-width: 8px; border-radius: 32px; }
+
+    .storage-grid { gap: 10px; }
+    .storage-img, .rain-img, .tv-option-img { width: 60px; height: 60px; }
+
+    .levels-header { top: 15px; left: 15px; }
+    .user-avatar-slot { width: 50px; height: 50px; }
+    .player-name-badge { font-size: 1.4rem; }
+    .level-card { font-size: 3.5rem; border-width: 8px; }
+
+    .device-option { width: 100%; max-width: 280px; }
+    .options-container { flex-direction: column; align-items: center; }
+
+    .interactive-scene-container { height: 320px; }
+
+    .nuvem-1 { width: 280px; height: 140px; }
+    .nuvem-2 { width: 220px; height: 110px; }
+    .asset-sol { width: 300px; }
+    .asset-nuvens { width: 280px; }
+}
+
+/* RESPONSIVIDADE CELULAR */
+@media (max-width: 480px) {
+    h1 { font-size: 1.5rem; margin-bottom: 20px; }
+
+    .gameplay-question-title { font-size: 1.1rem; }
+
+    .quiz-question { font-size: 1.1rem; margin-bottom: 20px; }
+
+    .btn-quiz { font-size: 1rem; padding: 10px 12px; border-width: 4px; }
+
+    .btn-sim, .btn-nao {
+        font-size: 1.4rem !important;
+        padding: 12px 30px !important;
+    }
+
+    .card { padding: 20px 12px; border-radius: 24px; }
+
+    .avatar-display { width: 160px; height: 160px; }
+    .nav-arrow { width: 45px; height: 45px; font-size: 1.4rem; }
+
+    .level-card { font-size: 2.5rem; border-radius: 24px; }
+    .levels-grid { gap: 15px; }
+
+    .player-name-badge { font-size: 1.1rem; }
+
+    .interactive-scene-container { height: 240px; }
+
+    .storage-img, .rain-img, .tv-option-img { width: 50px; height: 50px; }
+
+    .input-container input { font-size: 1.2rem; padding: 12px 15px; }
+
+    .btn-primary { font-size: 1.1rem; padding: 14px 40px; }
+
+    .nuvem-1 { width: 180px; height: 90px; }
+    .nuvem-2 { width: 150px; height: 75px; }
+    .asset-sol { width: 200px; }
+    .asset-nuvens { width: 200px; }
+}
+#btn-musica {
+    position: fixed;
+    top: 15px;
+    right: 15px;
+    z-index: 99999;
+    background: #D6F9FF;
+    border: 4px solid #82E9FF;
+    border-radius: 50%;
+    width: 50px;
+    height: 50px;
+    font-size: 1.5rem;
+    cursor: pointer;
+    box-shadow: 0 4px 0 #58D2EC;
+}
+/* ===== FEEDBACK DE EXPLICAÇÃO ===== */
+.feedback-explicacao {
+    margin-top: 20px;
+    padding: 12px 16px;
+    border-radius: 16px;
+    font-size: 1rem;
+    font-weight: bold;
+    text-align: center;
+    min-height: 1rem;
+}
+
+.feedback-explicacao.certo {
+    background-color: #c9f9cb;
+    border: 3px solid #00d632;
+    color: #00b029;
+}
+
+.feedback-explicacao.errado {
+    background-color: #ffc9bd;
+    border: 3px solid #ff6859;
+    color: #cc2200;
+}
+.btn-proximo-pergunta {
+    margin-top: 16px;
+    padding: 12px 28px;
+    background-color: #1054ae;
+    color: white;
+    border: none;
+    border-radius: 24px;
+    font-size: 1rem;
+    font-weight: bold;
+    cursor: pointer;
+    transition: transform 0.1s, box-shadow 0.1s;
+    box-shadow: 0 5px 0 #0a3d8f;
+}
+
+.btn-proximo-pergunta:active {
+    transform: translateY(5px);
+    box-shadow: none;
 }

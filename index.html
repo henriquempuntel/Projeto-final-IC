@@ -7,6 +7,7 @@
     <link rel="stylesheet" href="style.css">
 </head>
 <body>
+    <button id="btn-musica" onclick="toggleMusica()">🔊</button>
     <div id="game-container">
         <!-- ILUSTRAÇÕES DE FUNDO (TELAS DE CADASTRO) -->
         <div class="nuvem nuvem-1"></div>
@@ -166,23 +167,25 @@
             <div class="card text-center card-gameplay">
                 <h2 class="gameplay-question-title">Onde guardar meu aparelho?</h2>
                 <div class="storage-grid">
-                    <button class="storage-card" onclick="selectStorage(this, true)">
+                    <button class="storage-card" onclick="selectStorage(this, true,'Correto! O estojo protege o aparelho e é o lugar certo para guardar.')">
                         <img src="img/Estojo.png" alt="Estojo" class="storage-img">
                         <span>estojo</span>
                     </button>
-                    <button class="storage-card" onclick="selectStorage(this, false)">
+                    <button class="storage-card" onclick="selectStorage(this, false,'A janela pode expor o aparelho à umidade e quedas. Use o estojo!')">
                         <img src="img/Janela.png" alt="Janela" class="storage-img">
                         <span>janela</span>
                     </button>
-                    <button class="storage-card" onclick="selectStorage(this, false)">
+                    <button class="storage-card" onclick="selectStorage(this, false,'Na cama o aparelho pode cair ou ser amassado. Prefira o estojo!')">
                         <img src="img/Cama.png" alt="Cama" class="storage-img">
                         <span>cama</span>
                     </button>
-                    <button class="storage-card" onclick="selectStorage(this, false)">
+                    <button class="storage-card" onclick="selectStorage(this, false,'A pia tem umidade e pode danificar o aparelho. Sempre use o estojo!')">
                         <img src="img/pia.png" alt="Pia do banheiro" class="storage-img">
                         <span>pia do banheiro</span>
                     </button>
+                    
                 </div>
+                 <p id="feedback-guardar" class="feedback-explicacao"></p>
             </div>
         </div>
 
@@ -191,19 +194,21 @@
             <div class="card text-center card-gameplay">
                 <h2 class="gameplay-question-title">O que usar para proteger o aparelho contra uma chuva?</h2>
                 <div class="rain-options-grid">
-                    <button class="rain-card" onclick="selectRainProtection(this, true)">
+                    <button class="rain-card" onclick="selectRainProtection(this, true,'Correto! O guarda-chuva protege bem o aparelho da chuva.')">
                         <img src="img/guarda-chuva.png" alt="Guarda-chuva" class="rain-img">
                         <span>guarda-chuva</span>
                     </button>
-                    <button class="rain-card" onclick="selectRainProtection(this, false)">
+                    <button class="rain-card" onclick="selectRainProtection(this, false,'O boné não protege totalmente. O guarda-chuva é mais seguro!')">
                         <img src="img/bone.png" alt="Boné" class="rain-img">
                         <span>boné</span>
                     </button>
-                    <button class="rain-card" onclick="selectRainProtection(this, false)">
+                    <button class="rain-card" onclick="selectRainProtection(this, false,'As mãos não são suficientes. Use sempre um guarda-chuva!')">
                         <img src="img/maozinha.png" alt="Suas mãos" class="rain-img">
                         <span>suas mãos</span>
                     </button>
+                    
                 </div>
+                <p id="feedback-proteger" class="feedback-explicacao"></p>
             </div>
         </div>
 
@@ -226,10 +231,12 @@
                     <img src="img/falando.png" alt="Fala incompreendida" class="speech-img">
                 </div>
                 <div class="quiz-options-container">
-                    <button class="btn-quiz" onclick="selectSpeechOption(this, false)">Fingir que entendeu</button>
-                    <button class="btn-quiz" onclick="selectSpeechOption(this, true)">Pedir para repetir</button>
-                    <button class="btn-quiz" onclick="selectSpeechOption(this, false)">Ficar em silêncio</button>
+                    <button class="btn-quiz" onclick="selectSpeechOption(this, false, 'Fingir que entendeu pode causar confusão!')">Fingir que entendeu</button>
+                    <button class="btn-quiz" onclick="selectSpeechOption(this, true, 'Correto! Pedir para repetir garante que você entendeu.')">Pedir para repetir</button>
+                    <button class="btn-quiz" onclick="selectSpeechOption(this, false,'Ficar em silêncio não resolve — a pessoa não sabe que você não entendeu.')">Ficar em silêncio</button>
+                    
                 </div>
+                <p id="feedback-speech" class="feedback-explicacao"></p>
             </div>
         </div>
 
@@ -241,19 +248,21 @@
                     <img src="img/tv.png" alt="TV" class="tv-img">
                 </div>
                 <div class="tv-options-grid">
-                    <button class="tv-card" onclick="selectTvOption(this, true)">
+                    <button class="tv-card" onclick="selectTvOption(this, true,'Correto! Controlar o ambiente ao redor é uma forma de autoadvocacia.')">
                         <img src="img/controle.png" alt="Baixar o volume" class="tv-option-img">
                         <span>baixar o volume</span>
                     </button>
-                    <button class="tv-card" onclick="selectTvOption(this, false)">
+                    <button class="tv-card" onclick="selectTvOption(this, false,'Se o barulho atrapalha, você tem o direito de pedir para mudar isso.')">
                         <img src="img/nada.png" alt="Não fazer nada" class="tv-option-img">
                         <span>não fazer nada</span>
                     </button>
-                    <button class="tv-card" onclick="selectTvOption(this, false)">
+                    <button class="tv-card" onclick="selectTvOption(this, false,'Sair não resolve o problema. Você pode pedir para baixar o volume!')">
                         <img src="img/saida.png" alt="Sair do lugar" class="tv-option-img">
                         <span>sair do lugar</span>
                     </button>
+                    
                 </div>
+                <p id="feedback-tv" class="feedback-explicacao"></p>
             </div>
         </div>
 
@@ -265,10 +274,12 @@
                     <img src="img/menino-perguntando.png" alt="Amigo em dúvida" class="speech-img">
                 </div>
                 <div class="quiz-options-container">
-                    <button class="btn-quiz" onclick="selectFriendOption(this, true)">É um dispositivo que me ajuda a ouvir</button>
-                    <button class="btn-quiz" onclick="selectFriendOption(this, false)">Não é nada, deixa para lá</button>
-                    <button class="btn-quiz" onclick="selectFriendOption(this, false)">Ficar em silêncio</button>
+                    <button class="btn-quiz" onclick="selectFriendOption(this, true,'Ótimo! Explicar com confiança ajuda as pessoas a entenderem e respeitarem você.')">É um dispositivo que me ajuda a ouvir</button>
+                    <button class="btn-quiz" onclick="selectFriendOption(this, false,'Esconder não ajuda. Quando você explica, as pessoas aprendem a te respeitar melhor.')">Não é nada, deixa para lá</button>
+                    <button class="btn-quiz" onclick="selectFriendOption(this, false,'O silêncio pode gerar dúvidas. Uma explicação simples já resolve!')">Ficar em silêncio</button>
+                    
                 </div>
+                <p id="feedback-pergunta" class="feedback-explicacao"></p>
             </div>
         </div>
 
@@ -291,10 +302,12 @@
                     <img src="img/sala.png" alt="Sala de aula" class="diagram-img">
                 </div>
                 <div class="quiz-options-container">
-                    <button class="btn-quiz" onclick="selectSeatingOption(this, true)">Na frente, perto do professor</button>
-                    <button class="btn-quiz" onclick="selectSeatingOption(this, false)">No meio, perto da janela</button>
-                    <button class="btn-quiz" onclick="selectSeatingOption(this, false)">No fundo</button>
-                </div>
+                    <button class="btn-quiz" onclick="selectSeatingOption(this, true,'Ótima escolha! Sentar na frente facilita ouvir e acompanhar melhor a aula.')">Na frente, perto do professor</button>
+                    <button class="btn-quiz" onclick="selectSeatingOption(this, false,'O barulho da janela pode atrapalhar. Quanto mais perto do professor, melhor!')">No meio, perto da janela</button>
+                    <button class="btn-quiz" onclick="selectSeatingOption(this, false,'No fundo fica mais difícil ouvir o professor. Sempre que puder, sente na frente!')">No fundo</button>
+                   
+                </div> 
+                <p id="feedback-sentar" class="feedback-explicacao"></p>
             </div>
         </div>
 
@@ -322,9 +335,11 @@
                     <img src="img/metade-professora.png" alt="Professora" class="diagram-img">
                 </div>
                 <div class="quiz-options-container">
-                    <button class="btn-quiz" onclick="handleOptionChoice(this, true)">Pedir para ela explicar de novo para você depois</button>
-                    <button class="btn-quiz" onclick="handleOptionChoice(this, false)">Desistir de falar com ela</button>
+                    <button class="btn-quiz" onclick="handleOptionChoice(this, true,'Perfeito! Pedir ajuda é um direito seu e mostra responsabilidade.')">Pedir para ela explicar de novo para você depois</button>
+                    <button class="btn-quiz" onclick="handleOptionChoice(this, false,'Desistir pode te prejudicar. A professora está lá para te ajudar!')">Desistir de falar com ela</button>
+                    
                 </div>
+                <p id="feedback-professora" class="feedback-explicacao"></p>
             </div>
         </div>
 
@@ -336,9 +351,11 @@
                     <img src="img/mochila.png" alt="Mochila" class="diagram-img">
                 </div>
                 <div class="quiz-options-container">
-                    <button class="btn-quiz" onclick="handleOptionChoice(this, true)">Explicar que a bateria do aparelho acabou e você precisa carregar ele</button>
-                    <button class="btn-quiz" onclick="handleOptionChoice(this, false)">Ficar em silêncio</button>
+                    <button class="btn-quiz" onclick="handleOptionChoice(this, true,'Correto! Explicar a situação evita mal-entendidos e mostra sua autonomia.')">Explicar que a bateria do aparelho acabou e você precisa carregar ele</button>
+                    <button class="btn-quiz" onclick="handleOptionChoice(this, false,'Isso pode te prejudicar na nota. Sempre peça ajuda quando precisar!')">Ficar em silêncio</button>
+                    
                 </div>
+                <p id="feedback-mochila" class="feedback-explicacao"></p>
             </div>
         </div>
 
@@ -350,9 +367,11 @@
                     <img src="img/carteira-de-cima.png" alt="Prova" class="diagram-img">
                 </div>
                 <div class="quiz-options-container">
-                    <button class="btn-quiz" onclick="handleOptionChoice(this, false)">Chutar as respostas e entregar correndo</button>
-                    <button class="btn-quiz" onclick="handleOptionChoice(this, true)">Chamar a professora</button>
+                    <button class="btn-quiz" onclick="handleOptionChoice(this, false,'Isso pode te prejudicar na nota. Sempre peça ajuda quando precisar!')">Chutar as respostas e entregar correndo</button>
+                    <button class="btn-quiz" onclick="handleOptionChoice(this, true,'Ótimo! Pedir ajuda quando precisa é exatamente isso que é autoadvocacia.')">Chamar a professora</button>
+                    
                 </div>
+                <p id="feedback-continuar" class="feedback-explicacao"></p>
             </div>
         </div>
 

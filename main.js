@@ -7,7 +7,56 @@ document.addEventListener('DOMContentLoaded', () => {
         avatarIndex: 0,
         maxUnlockedLevel: 4 // Por padrão, todas as fases ficam abertas
     };
+    const musicaFundo = new Audio('audio/soundgallerybydmitrytaras-children-background-555815.mp3');
+    musicaFundo.loop = true;
+    musicaFundo.volume = 0.2;
 
+    const somAcerto = new Audio('audio/success-chime.mp3');
+    somAcerto.volume = 0.4
+    const somErro = new Audio('audio/wrong-buzzer_dudoo.mp3');
+    somErro.volume = 0.1
+    const somClique = new Audio('audio/aceeldon-click-button-578399.mp3');
+
+    let musicaAtiva = true;
+
+    function tocarAcerto() {
+        somAcerto.currentTime = 0;
+        somAcerto.play();
+    }
+
+    function tocarErro() {
+        somErro.currentTime = 0;
+        somErro.play();
+    }
+
+    function tocarClique() {
+        somClique.currentTime = 0;
+        somClique.play();
+    }
+
+    window.toggleMusica = function() {
+        musicaAtiva = !musicaAtiva;
+        if (musicaAtiva) {
+            musicaFundo.play();
+            document.getElementById('btn-musica').textContent = '🔊';
+        } else {
+            musicaFundo.pause();
+            document.getElementById('btn-musica').textContent = '🔇';
+        }
+    }
+    function mostrarBotaoProximo(feedback, textoBotao, aoClicar) {
+        const btnExistente = feedback.parentElement.querySelector('.btn-proximo-pergunta');
+        if (btnExistente) btnExistente.remove();
+
+        const btn = document.createElement('button');
+        btn.className = 'btn-proximo-pergunta';
+        btn.textContent = textoBotao;
+        btn.addEventListener('click', () => {
+            btn.remove();
+            aoClicar();
+        });
+        feedback.parentElement.appendChild(btn);
+    }
     let precisaDeQuiz = false;
     let currentPartIndex = 0;
 
@@ -118,6 +167,10 @@ document.addEventListener('DOMContentLoaded', () => {
 
     function hideAllScreens() {
         document.querySelectorAll('.game-screen').forEach(s => s.classList.remove('active'));
+        document.querySelectorAll('.feedback-explicacao').forEach(f => {
+            f.textContent = '';
+            f.className = 'feedback-explicacao';
+        });
     }
 
     function updateLevelsUI() {
@@ -187,6 +240,7 @@ document.addEventListener('DOMContentLoaded', () => {
 
     btnNameNext.addEventListener('click', () => {
         gameState.name = inputPlayerName.value.trim();
+        musicaFundo.play();
         generateAvatarList();
         updateAvatarDisplay();
         changeScreen(screenName, screenAvatar);
@@ -307,43 +361,59 @@ document.addEventListener('DOMContentLoaded', () => {
         screenLevel1Parts.classList.add('active');
     }
 
-    window.selectStorage = function(btnElement, isCorrect) {
+    window.selectStorage = function(btnElement, isCorrect,explicacao) {
+        const feedback = document.getElementById("feedback-guardar");
+        feedback.textContent = explicacao;
         const allCards = document.querySelectorAll('.storage-card');
         allCards.forEach(card => card.classList.remove('correct-answer', 'wrong-answer'));
 
         if (isCorrect) {
+            tocarAcerto();
             btnElement.classList.add('correct-answer');
-            setTimeout(() => {
+             feedback.className = "feedback-explicacao certo";
+            mostrarBotaoProximo(feedback, 'Próxima pergunta ➜', () => {
                 btnElement.classList.remove('correct-answer');
                 changeScreen(screenLevel1Storage, screenLevel1Rain);
-            }, 1200);
+            });
         } else {
+            tocarErro();
             btnElement.classList.add('wrong-answer');
-            setTimeout(() => {
+            feedback.className = "feedback-explicacao errado";
+            mostrarBotaoProximo(feedback, 'Tentar de novo ↩', () => {
                 btnElement.classList.remove('wrong-answer');
-            }, 1000);
+                feedback.textContent = '';
+                feedback.className = 'feedback-explicacao';
+            });
         }
     };
 
-    window.selectRainProtection = function(btnElement, isCorrect) {
+    window.selectRainProtection = function(btnElement, isCorrect,explicacao) {
+        const feedback = document.getElementById("feedback-proteger");
+        feedback.textContent = explicacao;
         const allCards = document.querySelectorAll('.rain-card');
         allCards.forEach(card => card.classList.remove('correct-answer', 'wrong-answer'));
 
         if (isCorrect) {
+            tocarAcerto();
             btnElement.classList.add('correct-answer');
-            setTimeout(() => {
+            mostrarBotaoProximo(feedback, 'Próxima pergunta ➜', () => {
                 btnElement.classList.remove('correct-answer');
+                feedback.className = "feedback-explicacao certo";
                 // Desbloqueia o Nível 2 ao concluir o Nível 1
                 if (gameState.maxUnlockedLevel < 2) {
                     gameState.maxUnlockedLevel = 2;
                 }
                 goToLevelsScreen();
-            }, 1200);
+            });
         } else {
+            tocarErro();
             btnElement.classList.add('wrong-answer');
-            setTimeout(() => {
+            feedback.className = "feedback-explicacao errado";
+            mostrarBotaoProximo(feedback, 'Tentar de novo ↩', () => {
                 btnElement.classList.remove('wrong-answer');
-            }, 1000);
+                feedback.textContent = '';
+                feedback.className = 'feedback-explicacao';
+            });
         }
     };
 
@@ -352,61 +422,85 @@ document.addEventListener('DOMContentLoaded', () => {
         changeScreen(screenLevel2Entry, screenLevel2Speech);
     };
 
-    window.selectSpeechOption = function(btnElement, isCorrect) {
+    window.selectSpeechOption = function(btnElement, isCorrect, explicacao) {
+        const feedback = document.getElementById("feedback-speech"); // adiciona essa
+        feedback.textContent = explicacao;   
         const allBtns = document.querySelectorAll('#screen-level2-speech .btn-quiz');
         allBtns.forEach(btn => btn.classList.remove('correct-answer', 'wrong-answer'));
 
         if (isCorrect) {
+            tocarAcerto();
             btnElement.classList.add('correct-answer');
-            setTimeout(() => {
+            feedback.className = "feedback-explicacao certo";
+            mostrarBotaoProximo(feedback, 'Próxima pergunta ➜', () => {
                 btnElement.classList.remove('correct-answer');
                 changeScreen(screenLevel2Speech, screenLevel2Friend);
-            }, 1200);
+            });
         } else {
+            tocarErro();
             btnElement.classList.add('wrong-answer');
-            setTimeout(() => {
+            feedback.className = "feedback-explicacao errado";
+            mostrarBotaoProximo(feedback, 'Tentar de novo ↩', () => {
                 btnElement.classList.remove('wrong-answer');
-            }, 1000);
+                feedback.textContent = '';
+                feedback.className = 'feedback-explicacao';
+            });
         }
     };
 
-    window.selectFriendOption = function(btnElement, isCorrect) {
+    window.selectFriendOption = function(btnElement, isCorrect,explicacao) {
+        const feedback = document.getElementById("feedback-pergunta");
+        feedback.textContent = explicacao;
         const allBtns = document.querySelectorAll('#screen-level2-friend .btn-quiz');
         allBtns.forEach(btn => btn.classList.remove('correct-answer', 'wrong-answer'));
 
         if (isCorrect) {
+            tocarAcerto();
             btnElement.classList.add('correct-answer');
-            setTimeout(() => {
+            feedback.className = "feedback-explicacao certo";
+            mostrarBotaoProximo(feedback, 'Próxima pergunta ➜', () => {
                 btnElement.classList.remove('correct-answer');
                 changeScreen(screenLevel2Friend, screenLevel2Tv);
-            }, 1200);
+            });
         } else {
+            tocarErro();
             btnElement.classList.add('wrong-answer');
-            setTimeout(() => {
+            feedback.className = "feedback-explicacao errado";
+             mostrarBotaoProximo(feedback, 'Tentar de novo ↩', () => {
                 btnElement.classList.remove('wrong-answer');
-            }, 1000);
+                feedback.textContent = '';
+                feedback.className = 'feedback-explicacao';
+            });
         }
     };
 
-    window.selectTvOption = function(btnElement, isCorrect) {
+    window.selectTvOption = function(btnElement, isCorrect,explicacao) {
+        const feedback = document.getElementById("feedback-tv");
+        feedback.textContent = explicacao;
         const allCards = document.querySelectorAll('.tv-card');
         allCards.forEach(card => card.classList.remove('correct-answer', 'wrong-answer'));
 
         if (isCorrect) {
+            tocarAcerto();
             btnElement.classList.add('correct-answer');
-            setTimeout(() => {
+            feedback.className = "feedback-explicacao certo";
+            mostrarBotaoProximo(feedback, 'Próxima pergunta ➜', () => {
                 btnElement.classList.remove('correct-answer');
                 // Desbloqueia o Nível 3 ao concluir o Nível 2
                 if (gameState.maxUnlockedLevel < 3) {
                     gameState.maxUnlockedLevel = 3;
                 }
                 goToLevelsScreen();
-            }, 1200);
+            });
         } else {
+            tocarErro();
             btnElement.classList.add('wrong-answer');
-            setTimeout(() => {
+            feedback.className = "feedback-explicacao errado";
+            mostrarBotaoProximo(feedback, 'Tentar de novo ↩', () => {
                 btnElement.classList.remove('wrong-answer');
-            }, 1000);
+                feedback.textContent = '';
+                feedback.className = 'feedback-explicacao';
+            });
         }
     };
 
@@ -415,24 +509,32 @@ document.addEventListener('DOMContentLoaded', () => {
         changeScreen(screenLevel3Entry, document.getElementById('screen-level3-seating'));
     };
 
-    window.selectSeatingOption = function(btnElement, isCorrect) {
+    window.selectSeatingOption = function(btnElement, isCorrect,explicacao) {
+        const feedback = document.getElementById("feedback-sentar");
+    feedback.textContent = explicacao;
         const allBtns = document.querySelectorAll('#screen-level3-seating .btn-quiz');
         allBtns.forEach(btn => btn.classList.remove('correct-answer', 'wrong-answer'));
 
         if (isCorrect) {
+            tocarAcerto();
             btnElement.classList.add('correct-answer');
-            setTimeout(() => {
+            feedback.className = "feedback-explicacao certo";
+            mostrarBotaoProximo(feedback, 'Próxima pergunta ➜', () => {
                 btnElement.classList.remove('correct-answer');
                 changeScreen(
                     document.getElementById('screen-level3-seating'),
                     document.getElementById('screen-level3-battery')
                 );
-            }, 1200);
+            });
         } else {
+            tocarErro();
             btnElement.classList.add('wrong-answer');
-            setTimeout(() => {
+            feedback.className = "feedback-explicacao errado";
+            mostrarBotaoProximo(feedback, 'Tentar de novo ↩', () => {
                 btnElement.classList.remove('wrong-answer');
-            }, 1000);
+                feedback.textContent = '';
+                feedback.className = 'feedback-explicacao';
+            });
         }
     };
 
@@ -444,26 +546,38 @@ document.addEventListener('DOMContentLoaded', () => {
         }
     };
 
-    window.handleOptionChoice = function(btnElement, isCorrect) {
+    window.handleOptionChoice = function(btnElement, isCorrect, explicacao) {
+        const telaAtiva = document.querySelector('.game-screen.active');
+        const feedbackId = 'feedback-' + telaAtiva.id.replace('screen-level3-', '');
+        const feedback = document.getElementById(feedbackId);
+        if (feedback) {
+            feedback.textContent = explicacao;
+        }
         const parent = btnElement.parentElement;
         const allBtns = parent.querySelectorAll('.btn-quiz');
         allBtns.forEach(b => b.classList.remove('correct-answer', 'wrong-answer'));
 
         if (isCorrect) {
+            tocarAcerto();
             btnElement.classList.add('correct-answer');
-            setTimeout(() => {
+            if (feedback) feedback.className = "feedback-explicacao certo";
+            mostrarBotaoProximo(feedback, 'Próxima pergunta ➜', () => {
                 btnElement.classList.remove('correct-answer');
                 // Desbloqueia o Nível 4 ao concluir o Nível 3
                 if (gameState.maxUnlockedLevel < 4) {
                     gameState.maxUnlockedLevel = 4;
                 }
                 goToLevelsScreen();
-            }, 1200);
+            });
         } else {
+            tocarErro();
             btnElement.classList.add('wrong-answer');
-            setTimeout(() => {
+             if (feedback) feedback.className = "feedback-explicacao errado";
+            mostrarBotaoProximo(feedback, 'Tentar de novo ↩', () => {
                 btnElement.classList.remove('wrong-answer');
-            }, 1000);
+                feedback.textContent = '';
+                feedback.className = 'feedback-explicacao';
+            });
         }
     };
 });
