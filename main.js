@@ -9,7 +9,7 @@ document.addEventListener('DOMContentLoaded', () => {
     };
 
     // --- EFEITOS SONOROS E MÚSICA ---
-    const musicaFundo = new Audio('audio/soundgallerybydmitrytaras-children-background-555815.mp3');
+    const musicaFundo = new Audio('audio/nastelbom-lofi-chill-372954.mp3');
     musicaFundo.loop = true;
     musicaFundo.volume = 0.2;
 
