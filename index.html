@@ -7,7 +7,9 @@
     <link rel="stylesheet" href="style.css">
 </head>
 <body>
-    <button id="btn-musica" onclick="toggleMusica()">🔊</button>
+    <button id="btn-musica" onclick="toggleMusica()" aria-label="Ligar/desligar som">
+        <img id="icone-musica" src="img/icone-com-som.png" alt="Som ativado">
+    </button>
     <div id="game-container">
         <!-- ILUSTRAÇÕES DE FUNDO (TELAS DE CADASTRO) -->
         <div class="nuvem nuvem-1"></div>
@@ -159,6 +161,9 @@
                 </div>
 
                 <div id="level1-parts-buttons" class="quiz-options-container"></div>
+                <button class="btn-voltar-fase" onclick="voltarFase()" aria-label="Voltar">
+                    <img src="img/voltar.png" alt="">
+                </button>
             </div>
         </div>
 
@@ -186,6 +191,9 @@
                     
                 </div>
                  <p id="feedback-guardar" class="feedback-explicacao"></p>
+                <button class="btn-voltar-fase" onclick="voltarFase()" aria-label="Voltar">
+                    <img src="img/voltar.png" alt="">
+                </button>
             </div>
         </div>
 
@@ -209,6 +217,38 @@
                     
                 </div>
                 <p id="feedback-proteger" class="feedback-explicacao"></p>
+                <button class="btn-voltar-fase" onclick="voltarFase()" aria-label="Voltar">
+                    <img src="img/voltar.png" alt="">
+                </button>
+            </div>
+        </div>
+
+        <!-- TELA NÍVEL 1 - ETAPA 4: LIMPAR O APARELHO -->
+        <div id="screen-level1-clean" class="game-screen">
+            <div class="card text-center card-gameplay">
+                <h2 class="gameplay-question-title">O que usar para limpar seu aparelho?</h2>
+                <div class="storage-grid">
+                    <button class="storage-card clean-card" onclick="selectCleaning(this, false,'A água pode entrar no aparelho e danificar as peças eletrônicas. Nunca molhe o aparelho!')">
+                        <img src="img/agua.png" alt="Água" class="storage-img">
+                        <span>água</span>
+                    </button>
+                    <button class="storage-card clean-card" onclick="selectCleaning(this, false,'A escova de dentes pode riscar o aparelho e a pasta pode entupir as entradas de som. Evite!')">
+                        <img src="img/escova-de-dentes.png" alt="Escova de dentes" class="storage-img">
+                        <span>escova de dentes</span>
+                    </button>
+                    <button class="storage-card clean-card" onclick="selectCleaning(this, true,'Correto! O pano seco remove a sujeira sem molhar nem danificar o aparelho.')">
+                        <img src="img/pano-seco.png" alt="Pano seco" class="storage-img">
+                        <span>pano seco</span>
+                    </button>
+                    <button class="storage-card clean-card" onclick="selectCleaning(this, false,'O palito de dente pode furar ou entupir as entradas de som do aparelho. Use um pano seco!')">
+                        <img src="img/palito-de-dente.png" alt="Palito de dente" class="storage-img">
+                        <span>palito de dente</span>
+                    </button>
+                </div>
+                <p id="feedback-limpar" class="feedback-explicacao"></p>
+                <button class="btn-voltar-fase" onclick="voltarFase()" aria-label="Voltar">
+                    <img src="img/voltar.png" alt="">
+                </button>
             </div>
         </div>
 
@@ -237,6 +277,9 @@
                     
                 </div>
                 <p id="feedback-speech" class="feedback-explicacao"></p>
+                <button class="btn-voltar-fase" onclick="voltarFase()" aria-label="Voltar">
+                    <img src="img/voltar.png" alt="">
+                </button>
             </div>
         </div>
 
@@ -263,6 +306,9 @@
                     
                 </div>
                 <p id="feedback-tv" class="feedback-explicacao"></p>
+                <button class="btn-voltar-fase" onclick="voltarFase()" aria-label="Voltar">
+                    <img src="img/voltar.png" alt="">
+                </button>
             </div>
         </div>
 
@@ -280,6 +326,9 @@
                     
                 </div>
                 <p id="feedback-pergunta" class="feedback-explicacao"></p>
+                <button class="btn-voltar-fase" onclick="voltarFase()" aria-label="Voltar">
+                    <img src="img/voltar.png" alt="">
+                </button>
             </div>
         </div>
 
@@ -308,6 +357,76 @@
                    
                 </div> 
                 <p id="feedback-sentar" class="feedback-explicacao"></p>
+                <button class="btn-voltar-fase" onclick="voltarFase()" aria-label="Voltar">
+                    <img src="img/voltar.png" alt="">
+                </button>
+            </div>
+        </div>
+
+        <!-- TELA NÍVEL 3 - ETAPA 2: PARA QUE SERVE O SISTEMA FM -->
+        <div id="screen-level3-fm-purpose" class="game-screen">
+            <div class="card text-center card-gameplay">
+                <h2 class="gameplay-question-title">Para que serve o sistema FM na escola?</h2>
+                <div class="fm-devices-container">
+                    <div class="fm-device-art fm-transmissor fm-tilt-left">
+                        <img class="fm-body" src="img/transmissor.png" alt="Transmissor" draggable="false">
+                    </div>
+                    <div class="fm-device-art fm-receptor fm-tilt-right">
+                        <img class="fm-body" src="img/receptor.png" alt="Receptor" draggable="false">
+                        <img class="fm-mini" src="img/mini-receptor.png" alt="" draggable="false">
+                    </div>
+                </div>
+                <div class="quiz-options-container">
+                    <button class="btn-quiz" onclick="selectFmPurposeOption(this, true,'Correto! O sistema FM leva a voz do professor direto para o seu aparelho, ajudando a ouvir melhor mesmo com barulho na sala.')">Ouvir melhor a fala do professor em ambientes barulhentos</button>
+                    <button class="btn-quiz" onclick="selectFmPurposeOption(this, false,'O aparelho ajuda, mas o barulho e a distância ainda atrapalham. O sistema FM completa o aparelho e deixa a voz do professor mais clara!')">Não é necessário se estiver de aparelho</button>
+                    <button class="btn-quiz" onclick="selectFmPurposeOption(this, false,'O transmissor fica com o professor, então o sistema FM ajuda principalmente a ouvir a fala dele. Para ouvir os colegas, peça que falem um de cada vez.')">Ouvir melhor a fala dos colegas</button>
+                </div>
+                <p id="feedback-fm-serve" class="feedback-explicacao"></p>
+                <button class="btn-voltar-fase" onclick="voltarFase()" aria-label="Voltar">
+                    <img src="img/voltar.png" alt="">
+                </button>
+            </div>
+        </div>
+
+        <!-- TELA NÍVEL 3 - ETAPA 3: QUEM USA O SISTEMA FM (ARRASTAR) -->
+        <div id="screen-level3-fm-who" class="game-screen">
+            <div class="card text-center card-gameplay">
+                <h2 class="gameplay-question-title">Dê o dispositivo a pessoa correta</h2>
+                <div class="fm-people">
+                    <div class="fm-person" data-accepts="transmissor">
+                        <div class="fm-person-img-wrap">
+                            <img class="fm-person-img" src="img/metade-professora.png" alt="Professora" draggable="false">
+                            <div class="fm-slot"></div>
+                        </div>
+                        <span>professora</span>
+                    </div>
+                    <div class="fm-person" data-accepts="receptor">
+                        <div class="fm-person-img-wrap">
+                            <img class="fm-person-img" src="img/aluno-metade.png" alt="Aluno" draggable="false">
+                            <div class="fm-slot"></div>
+                        </div>
+                        <span>aluno</span>
+                    </div>
+                </div>
+                <div class="fm-tray">
+                    <div class="fm-drag-item" data-device="transmissor">
+                        <div class="fm-device-art fm-transmissor">
+                            <img class="fm-body" src="img/transmissor.png" alt="Transmissor" draggable="false">
+                        </div>
+                        <span>transmissor</span>
+                    </div>
+                    <div class="fm-drag-item" data-device="receptor">
+                        <div class="fm-device-art fm-receptor">
+                            <img class="fm-body" src="img/receptor.png" alt="Receptor" draggable="false">
+                            <img class="fm-mini" src="img/mini-receptor.png" alt="" draggable="false">
+                        </div>
+                        <span>receptor</span>
+                    </div>
+                </div>
+                <p id="feedback-fm-quem" class="feedback-explicacao"></p>
+                <button class="btn-voltar-fase" onclick="voltarFase()" aria-label="Voltar">
+                    <img src="img/voltar.png" alt="">
+                </button>
             </div>
         </div>
 
@@ -324,6 +443,9 @@
                     <img src="img/mochila.png" class="clickable-obj obj-mochila" onclick="navigateToScene('screen-level3-mochila')" alt="Mochila">
                     <img src="img/carteira.png" class="clickable-obj obj-carteira" onclick="navigateToScene('screen-level3-continuar')" alt="Carteira">
                 </div>
+                <button class="btn-voltar-fase" onclick="voltarFase()" aria-label="Voltar">
+                    <img src="img/voltar.png" alt="">
+                </button>
             </div>
         </div>
 
@@ -340,6 +462,9 @@
                     
                 </div>
                 <p id="feedback-professora" class="feedback-explicacao"></p>
+                <button class="btn-voltar-fase" onclick="voltarFase()" aria-label="Voltar">
+                    <img src="img/voltar.png" alt="">
+                </button>
             </div>
         </div>
 
@@ -356,6 +481,9 @@
                     
                 </div>
                 <p id="feedback-mochila" class="feedback-explicacao"></p>
+                <button class="btn-voltar-fase" onclick="voltarFase()" aria-label="Voltar">
+                    <img src="img/voltar.png" alt="">
+                </button>
             </div>
         </div>
 
@@ -372,6 +500,9 @@
                     
                 </div>
                 <p id="feedback-continuar" class="feedback-explicacao"></p>
+                <button class="btn-voltar-fase" onclick="voltarFase()" aria-label="Voltar">
+                    <img src="img/voltar.png" alt="">
+                </button>
             </div>
         </div>
 
@@ -392,13 +523,19 @@
                 <h2 id="l4-question-title" class="gameplay-question-title">Carregando pergunta...</h2>
                 <div id="l4-options-container" class="quiz-options-container"></div>
                 <p id="feedback-l4" class="feedback-explicacao"></p>
+                <button class="btn-voltar-fase" onclick="voltarFase()" aria-label="Voltar">
+                    <img src="img/voltar.png" alt="">
+                </button>
             </div>
         </div>
 
         <!-- TELA DE PARABÉNS - CONCLUSÃO DOS NÍVEIS -->
         <div id="screen-conclusion" class="game-screen">
             <div class="card text-center">
-                <h1>Parabéns!</h1>
+                <h1 class="parabens-titulo">
+                    <img src="img/faixa-parabens.png" alt="" draggable="false">
+                    <span>parabéns!</span>
+                </h1>
                 <p class="quiz-question">Você concluiu todos os níveis e aprendeu a cuidar do seu aparelho e a defender o que precisa. Você é o protagonista da sua própria jornada!</p>
                 <div class="options-container">
                     <button class="btn-primary" onclick="voltarNiveisFinal()">Voltar para os níveis</button>

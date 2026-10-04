@@ -858,6 +858,17 @@ h1 {
     font-size: 1.5rem;
     cursor: pointer;
     box-shadow: 0 4px 0 #58D2EC;
+    padding: 0;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
+#btn-musica img {
+    width: 26px;
+    height: 26px;
+    object-fit: contain;
+    pointer-events: none;
 }
 
 /* FEEDBACK DE EXPLICAÇÃO */
@@ -954,4 +965,295 @@ h1 {
     .nuvem-2 { width: 150px; height: 75px; }
     .asset-sol { width: 200px; }
     .asset-nuvens { width: 200px; }
+}
+
+/* ==========================================================
+   BOTÃO VOLTAR DAS FASES
+   Fica no fluxo do card, no canto inferior esquerdo, com o mesmo
+   espaçamento (20px) que os textos têm entre si. Margem esquerda
+   (17px da borda interna) e inferior medidas em local_botao_voltar.png.
+   ========================================================== */
+.card-gameplay {
+    padding-bottom: 12px;
+}
+
+/* feedback vazio não ocupa espaço (evita "buraco" antes do botão voltar) */
+.card-gameplay .feedback-explicacao:empty {
+    display: none;
+}
+
+.btn-voltar-fase {
+    position: relative;
+    align-self: flex-start;
+    flex-shrink: 0;
+    margin: 20px 0 0 -13px; /* 30px de padding do card - 13px = 17px da borda */
+    width: 84px;
+    height: 84px;
+    padding: 0;
+    background: #C7F7FF;
+    border: 10px solid #78F2FF;
+    border-radius: 50%;
+    box-shadow: 0 7px 0 #78F2FF;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    cursor: pointer;
+    outline: none;
+    transition: transform 0.1s, box-shadow 0.1s, background-color 0.2s;
+}
+
+.btn-voltar-fase:hover {
+    background-color: #D9FAFF;
+}
+
+.btn-voltar-fase:active {
+    transform: translateY(7px);
+    box-shadow: none;
+}
+
+.btn-voltar-fase img {
+    width: 17px;
+    height: auto;
+    pointer-events: none;
+}
+
+/* ==========================================================
+   NÍVEL 3 - SISTEMA FM
+   ========================================================== */
+#screen-level3-fm-purpose,
+#screen-level3-fm-who {
+    --fm-art-h: clamp(100px, 20vh, 170px);
+    --fm-person-h: clamp(130px, 27vh, 230px);
+    --fm-circle: clamp(130px, 22vh, 175px);
+}
+
+/* Arte dos dispositivos (transmissor / receptor + mini receptor) */
+.fm-device-art {
+    position: relative;
+    display: inline-block;
+    height: var(--fm-art-h);
+}
+
+.fm-device-art .fm-body {
+    height: 100%;
+    width: auto;
+    display: block;
+    pointer-events: none;
+    user-select: none;
+    -webkit-user-drag: none;
+}
+
+.fm-receptor .fm-mini {
+    position: absolute;
+    left: -15.8%;
+    top: 8.1%;
+    width: 18.4%;
+    height: auto;
+    pointer-events: none;
+}
+
+.fm-tilt-left { transform: rotate(-12deg); }
+.fm-tilt-right { transform: rotate(15deg); }
+
+/* Etapa "para que serve" */
+.fm-devices-container {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    gap: clamp(50px, 14vw, 120px);
+    width: 100%;
+    padding: 8px 0 22px 0;
+}
+
+/* Etapa "quem usa" */
+.fm-people {
+    display: flex;
+    justify-content: space-around;
+    align-items: flex-end;
+    width: 100%;
+    margin-bottom: 18px;
+}
+
+.fm-person {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    padding: 8px 18px 6px 18px;
+    border: 4px solid transparent;
+    border-radius: 28px;
+    transition: background-color 0.2s, border-color 0.2s;
+}
+
+.fm-person.over {
+    background-color: #eafbff;
+    border-color: #82E9FF;
+}
+
+.fm-person.fm-ok {
+    background-color: #c9f9cb;
+    border-color: #00d632;
+}
+
+.fm-person-img-wrap {
+    position: relative;
+    height: var(--fm-person-h);
+    display: flex;
+    justify-content: center;
+}
+
+.fm-person-img {
+    height: 100%;
+    width: auto;
+    max-width: 100%;
+    object-fit: contain;
+    pointer-events: none;
+}
+
+.fm-person > span {
+    margin-top: 8px;
+    font-size: 1.2rem;
+    color: #0b4ca0;
+    font-weight: bold;
+}
+
+.fm-person.fm-ok > span {
+    color: #00b029;
+}
+
+.fm-slot {
+    position: absolute;
+    right: -34px;
+    bottom: -6px;
+    pointer-events: none;
+}
+
+.fm-slot .fm-device-art {
+    height: calc(var(--fm-person-h) * 0.5);
+    transform: none;
+    animation: fmPop 0.3s ease-out;
+}
+
+@keyframes fmPop {
+    0% { transform: scale(0.4); opacity: 0; }
+    100% { transform: scale(1); opacity: 1; }
+}
+
+.fm-tray {
+    display: flex;
+    justify-content: space-around;
+    align-items: center;
+    width: 100%;
+}
+
+.fm-drag-item {
+    position: relative;
+    z-index: 1;
+    width: var(--fm-circle);
+    height: var(--fm-circle);
+    border: 8px solid #78F2FF;
+    border-radius: 50%;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    gap: 4px;
+    cursor: grab;
+    touch-action: none;
+    user-select: none;
+    -webkit-user-select: none;
+    transition: transform 0.25s ease, opacity 0.2s ease, background-color 0.2s;
+}
+
+.fm-drag-item:hover {
+    background-color: #eafbff;
+}
+
+.fm-drag-item .fm-device-art {
+    height: calc(var(--fm-circle) * 0.52);
+}
+
+.fm-drag-item > span {
+    font-size: 1.05rem;
+    color: #0b4ca0;
+    font-weight: bold;
+    pointer-events: none;
+}
+
+.fm-drag-item.dragging {
+    z-index: 50;
+    cursor: grabbing;
+    transition: none;
+    background-color: #eafbff;
+    box-shadow: 0 12px 24px rgba(0, 0, 0, 0.18);
+}
+
+.fm-drag-item.placed {
+    opacity: 0.18;
+    pointer-events: none;
+}
+
+.fm-drag-item.fm-wrong {
+    background-color: #ffc9bd;
+    border-color: #ff6859;
+    animation: shakeError 0.3s ease-in-out;
+}
+
+@media (max-width: 768px) {
+    .card-gameplay { padding-bottom: 10px; }
+    .btn-voltar-fase {
+        margin: 20px 0 0 -3px; /* 15px de padding do card - 3px = 12px da borda */
+        width: 62px;
+        height: 62px;
+        border-width: 8px;
+        box-shadow: 0 5px 0 #78F2FF;
+    }
+    .btn-voltar-fase:active { transform: translateY(5px); }
+    .btn-voltar-fase img { width: 13px; }
+    .fm-person { padding: 6px 8px 4px 8px; }
+    .fm-slot { right: -14px; }
+}
+
+@media (max-width: 480px) {
+    .btn-voltar-fase { margin-left: 0; } /* padding do card já é 12px */
+    .fm-drag-item { border-width: 6px; }
+    .fm-drag-item > span { font-size: 0.95rem; }
+    .fm-person > span { font-size: 1rem; }
+}
+
+/* ==========================================================
+   TELA FINAL - FAIXA "PARABÉNS" (parabens.png)
+   Texto #0040A0 com realce azul-claro em cima e sombra
+   amarelo-alaranjada embaixo, sobre img/faixa-parabens.png
+   ========================================================== */
+.parabens-titulo {
+    position: relative;
+    width: 100%;
+    max-width: 600px;
+    margin: 0 auto 28px auto;
+    container-type: inline-size;
+    line-height: 1;
+}
+
+.parabens-titulo img {
+    display: block;
+    width: 100%;
+    height: auto;
+    pointer-events: none;
+    user-select: none;
+}
+
+.parabens-titulo span {
+    position: absolute;
+    left: 51%;
+    top: 37%;
+    transform: translate(-50%, -50%);
+    white-space: nowrap;
+    font-family: 'Arial', sans-serif;
+    font-weight: bold;
+    font-size: 3rem;        /* alternativa para navegadores sem container queries */
+    font-size: 11.5cqw;     /* proporcional à largura da faixa */
+    line-height: 1;
+    color: #0040A0;
+    text-transform: lowercase;
+    text-shadow: 0 -0.025em 0 #6BBAFF, 0.04em 0.05em 0 #FFCE3C;
 }

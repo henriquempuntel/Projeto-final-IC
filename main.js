@@ -38,12 +38,15 @@ document.addEventListener('DOMContentLoaded', () => {
 
     window.toggleMusica = function() {
         musicaAtiva = !musicaAtiva;
+        const iconeMusica = document.getElementById('icone-musica');
         if (musicaAtiva) {
             musicaFundo.play();
-            document.getElementById('btn-musica').textContent = '🔊';
+            iconeMusica.src = 'img/icone-com-som.png';
+            iconeMusica.alt = 'Som ativado';
         } else {
             musicaFundo.pause();
-            document.getElementById('btn-musica').textContent = '🔇';
+            iconeMusica.src = 'img/icone-sem-som.png';
+            iconeMusica.alt = 'Som desativado';
         }
     };
 
@@ -61,7 +64,8 @@ document.addEventListener('DOMContentLoaded', () => {
             btn.remove();
             aoClicar();
         });
-        feedback.parentElement.appendChild(btn);
+        // logo abaixo do feedback (o botão voltar fica sempre por último)
+        feedback.insertAdjacentElement('afterend', btn);
     }
 
     let precisaDeQuiz = false;
@@ -178,6 +182,7 @@ document.addEventListener('DOMContentLoaded', () => {
     const screenLevel1Parts = document.getElementById('screen-level1-parts');
     const screenLevel1Storage = document.getElementById('screen-level1-storage');
     const screenLevel1Rain = document.getElementById('screen-level1-rain');
+    const screenLevel1Clean = document.getElementById('screen-level1-clean');
 
     // Telas do Nível 2
     const screenLevel2Entry = document.getElementById('screen-level2-entry');
@@ -187,6 +192,10 @@ document.addEventListener('DOMContentLoaded', () => {
 
     // Telas do Nível 3
     const screenLevel3Entry = document.getElementById('screen-level3-entry');
+    const screenLevel3Seating = document.getElementById('screen-level3-seating');
+    const screenLevel3FmPurpose = document.getElementById('screen-level3-fm-purpose');
+    const screenLevel3FmWho = document.getElementById('screen-level3-fm-who');
+    const screenLevel3Battery = document.getElementById('screen-level3-battery');
 
     // Telas do Nível 4 e Conclusão
     const screenLevel4Entry = document.getElementById('screen-level4-entry');
@@ -219,6 +228,10 @@ document.addEventListener('DOMContentLoaded', () => {
         document.querySelectorAll('.feedback-explicacao').forEach(f => {
             f.textContent = '';
             f.className = 'feedback-explicacao';
+        });
+        document.querySelectorAll('.btn-proximo-pergunta').forEach(b => b.remove());
+        document.querySelectorAll('.correct-answer, .wrong-answer').forEach(el => {
+            el.classList.remove('correct-answer', 'wrong-answer');
         });
     }
 
@@ -478,6 +491,35 @@ document.addEventListener('DOMContentLoaded', () => {
             if (feedback) feedback.className = "feedback-explicacao certo";
             mostrarBotaoProximo(feedback, 'Próxima pergunta ➜', () => {
                 btnElement.classList.remove('correct-answer');
+                changeScreen(screenLevel1Rain, screenLevel1Clean);
+            });
+        } else {
+            tocarErro();
+            btnElement.classList.add('wrong-answer');
+            if (feedback) feedback.className = "feedback-explicacao errado";
+            mostrarBotaoProximo(feedback, 'Tentar de novo ↩', () => {
+                btnElement.classList.remove('wrong-answer');
+                if (feedback) {
+                    feedback.textContent = '';
+                    feedback.className = 'feedback-explicacao';
+                }
+            });
+        }
+    };
+
+    window.selectCleaning = function(btnElement, isCorrect, explicacao) {
+        const feedback = document.getElementById("feedback-limpar");
+        if (feedback) feedback.textContent = explicacao;
+
+        const allCards = document.querySelectorAll('.clean-card');
+        allCards.forEach(card => card.classList.remove('correct-answer', 'wrong-answer'));
+
+        if (isCorrect) {
+            tocarAcerto();
+            btnElement.classList.add('correct-answer');
+            if (feedback) feedback.className = "feedback-explicacao certo";
+            mostrarBotaoProximo(feedback, 'Próxima pergunta ➜', () => {
+                btnElement.classList.remove('correct-answer');
                 if (gameState.maxUnlockedLevel < 2) {
                     gameState.maxUnlockedLevel = 2;
                 }
@@ -612,10 +654,7 @@ document.addEventListener('DOMContentLoaded', () => {
             if (feedback) feedback.className = "feedback-explicacao certo";
             mostrarBotaoProximo(feedback, 'Próxima pergunta ➜', () => {
                 btnElement.classList.remove('correct-answer');
-                changeScreen(
-                    document.getElementById('screen-level3-seating'),
-                    document.getElementById('screen-level3-battery')
-                );
+                changeScreen(screenLevel3Seating, screenLevel3FmPurpose);
             });
         } else {
             tocarErro();
@@ -629,6 +668,218 @@ document.addEventListener('DOMContentLoaded', () => {
                 }
             });
         }
+    };
+
+    // --- NÍVEL 3: SISTEMA FM (PARA QUE SERVE) ---
+    window.selectFmPurposeOption = function(btnElement, isCorrect, explicacao) {
+        const feedback = document.getElementById("feedback-fm-serve");
+        if (feedback) feedback.textContent = explicacao;
+
+        const allBtns = document.querySelectorAll('#screen-level3-fm-purpose .btn-quiz');
+        allBtns.forEach(btn => btn.classList.remove('correct-answer', 'wrong-answer'));
+
+        if (isCorrect) {
+            tocarAcerto();
+            btnElement.classList.add('correct-answer');
+            if (feedback) feedback.className = "feedback-explicacao certo";
+            mostrarBotaoProximo(feedback, 'Próxima pergunta ➜', () => {
+                btnElement.classList.remove('correct-answer');
+                resetFmWho();
+                changeScreen(screenLevel3FmPurpose, screenLevel3FmWho);
+            });
+        } else {
+            tocarErro();
+            btnElement.classList.add('wrong-answer');
+            if (feedback) feedback.className = "feedback-explicacao errado";
+            mostrarBotaoProximo(feedback, 'Tentar de novo ↩', () => {
+                btnElement.classList.remove('wrong-answer');
+                if (feedback) {
+                    feedback.textContent = '';
+                    feedback.className = 'feedback-explicacao';
+                }
+            });
+        }
+    };
+
+    // --- NÍVEL 3: SISTEMA FM (QUEM USA - ARRASTAR) ---
+    const fmPlaced = { transmissor: false, receptor: false };
+
+    const fmMensagens = {
+        certo: {
+            transmissor: 'Certo! O transmissor fica com a professora: ele capta a voz dela.',
+            receptor: 'Certo! O receptor fica com o aluno: ele recebe a voz da professora e envia para o aparelho.',
+            ambos: 'Muito bem! A professora usa o transmissor e o aluno usa o receptor.'
+        },
+        errado: {
+            transmissor: 'O transmissor é de quem fala, ou seja, da professora. Tente de novo!',
+            receptor: 'O receptor é de quem precisa ouvir melhor, ou seja, do aluno. Tente de novo!'
+        }
+    };
+
+    function resetFmWho() {
+        fmPlaced.transmissor = false;
+        fmPlaced.receptor = false;
+        if (!screenLevel3FmWho) return;
+        screenLevel3FmWho.querySelectorAll('.fm-drag-item').forEach(item => {
+            item.classList.remove('placed', 'dragging', 'fm-wrong');
+            item.style.transform = '';
+        });
+        screenLevel3FmWho.querySelectorAll('.fm-person').forEach(zone => {
+            zone.classList.remove('fm-ok', 'over');
+            const slot = zone.querySelector('.fm-slot');
+            if (slot) slot.innerHTML = '';
+        });
+        screenLevel3FmWho.querySelectorAll('.btn-proximo-pergunta').forEach(b => b.remove());
+        const feedback = document.getElementById('feedback-fm-quem');
+        if (feedback) {
+            feedback.textContent = '';
+            feedback.className = 'feedback-explicacao';
+        }
+    }
+
+    function pontoDentro(el, x, y) {
+        const r = el.getBoundingClientRect();
+        return x >= r.left && x <= r.right && y >= r.top && y <= r.bottom;
+    }
+
+    function soltarDispositivo(item, zone) {
+        const device = item.dataset.device;
+        const feedback = document.getElementById('feedback-fm-quem');
+        const correto = zone.dataset.accepts === device;
+
+        if (correto) {
+            tocarAcerto();
+            fmPlaced[device] = true;
+            item.classList.add('placed');
+            zone.classList.add('fm-ok');
+            const slot = zone.querySelector('.fm-slot');
+            const arte = item.querySelector('.fm-device-art');
+            if (slot && arte) slot.appendChild(arte.cloneNode(true));
+
+            const terminou = fmPlaced.transmissor && fmPlaced.receptor;
+            if (feedback) {
+                feedback.textContent = terminou ? fmMensagens.certo.ambos : fmMensagens.certo[device];
+                feedback.className = 'feedback-explicacao certo';
+            }
+            if (terminou) {
+                mostrarBotaoProximo(feedback, 'Próxima pergunta ➜', () => {
+                    changeScreen(screenLevel3FmWho, screenLevel3Battery);
+                });
+            }
+        } else {
+            tocarErro();
+            item.classList.add('fm-wrong');
+            setTimeout(() => item.classList.remove('fm-wrong'), 500);
+            if (feedback) {
+                feedback.textContent = fmMensagens.errado[device];
+                feedback.className = 'feedback-explicacao errado';
+            }
+        }
+    }
+
+    function configurarArrastarFm() {
+        if (!screenLevel3FmWho) return;
+        const items = screenLevel3FmWho.querySelectorAll('.fm-drag-item');
+        const zones = screenLevel3FmWho.querySelectorAll('.fm-person');
+
+        items.forEach(item => {
+            let arrastando = false;
+            let inicioX = 0;
+            let inicioY = 0;
+
+            item.addEventListener('pointerdown', (e) => {
+                if (item.classList.contains('placed')) return;
+                arrastando = true;
+                inicioX = e.clientX;
+                inicioY = e.clientY;
+                item.setPointerCapture(e.pointerId);
+                item.classList.add('dragging');
+                e.preventDefault();
+            });
+
+            item.addEventListener('pointermove', (e) => {
+                if (!arrastando) return;
+                item.style.transform = `translate(${e.clientX - inicioX}px, ${e.clientY - inicioY}px) scale(1.06)`;
+                zones.forEach(z => z.classList.toggle('over', pontoDentro(z, e.clientX, e.clientY)));
+            });
+
+            const terminar = (e, cancelado) => {
+                if (!arrastando) return;
+                arrastando = false;
+                if (item.hasPointerCapture && item.hasPointerCapture(e.pointerId)) {
+                    item.releasePointerCapture(e.pointerId);
+                }
+                zones.forEach(z => z.classList.remove('over'));
+                item.classList.remove('dragging');
+                item.style.transform = '';
+
+                if (cancelado) return;
+                const zone = Array.from(zones).find(z => pontoDentro(z, e.clientX, e.clientY));
+                if (zone) soltarDispositivo(item, zone);
+            };
+
+            item.addEventListener('pointerup', (e) => terminar(e, false));
+            item.addEventListener('pointercancel', (e) => terminar(e, true));
+        });
+    }
+
+    configurarArrastarFm();
+
+    // --- BOTÃO VOLTAR DAS FASES ---
+    function irParaTela(id) {
+        hideAllScreens();
+        if (id === 'screen-level3-fm-who') resetFmWho();
+        const tela = document.getElementById(id);
+        if (tela) tela.classList.add('active');
+    }
+
+    // Para cada fase: id da tela anterior, ou uma função quando há lógica própria
+    const voltarDestinos = {
+        'screen-level1-parts': () => {
+            if (currentPartIndex > 0) {
+                currentPartIndex--;
+                startLevel1Question();
+            } else {
+                irParaTela('screen-level1-entry');
+            }
+        },
+        'screen-level1-storage': () => {
+            const data = level1Data[gameState.device] || level1Data['a'];
+            currentPartIndex = data.questions.length - 1;
+            startLevel1Question();
+        },
+        'screen-level1-rain': 'screen-level1-storage',
+        'screen-level1-clean': 'screen-level1-rain',
+
+        'screen-level2-speech': 'screen-level2-entry',
+        'screen-level2-friend': 'screen-level2-speech',
+        'screen-level2-tv': 'screen-level2-friend',
+
+        'screen-level3-seating': 'screen-level3-entry',
+        'screen-level3-fm-purpose': 'screen-level3-seating',
+        'screen-level3-fm-who': 'screen-level3-fm-purpose',
+        'screen-level3-battery': 'screen-level3-fm-who',
+        'screen-level3-professora': 'screen-level3-battery',
+        'screen-level3-mochila': 'screen-level3-battery',
+        'screen-level3-continuar': 'screen-level3-battery',
+
+        'screen-level4-quiz': () => {
+            if (currentL4Index > 0) {
+                currentL4Index--;
+                showLevel4Question();
+            } else {
+                irParaTela('screen-level4-entry');
+            }
+        }
+    };
+
+    window.voltarFase = function() {
+        tocarClique();
+        const telaAtiva = document.querySelector('.game-screen.active');
+        if (!telaAtiva) return;
+        const destino = voltarDestinos[telaAtiva.id];
+        if (typeof destino === 'function') destino();
+        else if (destino) irParaTela(destino);
     };
 
     window.navigateToScene = function(targetScreenId) {
