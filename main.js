@@ -50,15 +50,63 @@ document.addEventListener('DOMContentLoaded', () => {
         }
     };
 
+    // --- EMBARALHAR OPÇÕES (Fisher-Yates, sem o viés do sort aleatório) ---
+    function embaralhar(lista) {
+        const original = lista.slice();
+        let tentativas = 0;
+        do {
+            for (let i = lista.length - 1; i > 0; i--) {
+                const j = Math.floor(Math.random() * (i + 1));
+                [lista[i], lista[j]] = [lista[j], lista[i]];
+            }
+            tentativas++;
+        } while (lista.length > 2 && tentativas < 10 && lista.every((el, i) => el === original[i]));
+        return lista;
+    }
+
+    // Opções escritas direto no HTML: embaralha toda vez que a tela é aberta
+    const SELETORES_OPCOES = '.quiz-options-container, .storage-grid, .rain-options-grid, .tv-options-grid';
+    function embaralharOpcoesDaTela(tela) {
+        if (!tela || /^screen-quiz-/.test(tela.id)) return; // quiz de cadastro não tem certa/errada
+        tela.querySelectorAll(SELETORES_OPCOES).forEach(cont => {
+            if (cont.id === 'level1-parts-buttons' || cont.id === 'l4-options-container') return; // já embaralhados no JS
+            const itens = Array.from(cont.children).filter(el => el.tagName === 'BUTTON');
+            if (itens.length < 2) return;
+            embaralhar(itens).forEach(el => cont.appendChild(el));
+        });
+    }
+
+    const observadorTelas = new MutationObserver(mutacoes => {
+        mutacoes.forEach(m => {
+            const tela = m.target;
+            const ativaAgora = tela.classList.contains('active');
+            const eraAtiva = (m.oldValue || '').split(/\s+/).includes('active');
+            if (ativaAgora && !eraAtiva) embaralharOpcoesDaTela(tela);
+        });
+    });
+    document.querySelectorAll('.game-screen').forEach(t => {
+        observadorTelas.observe(t, { attributes: true, attributeFilter: ['class'], attributeOldValue: true });
+    });
+
     function mostrarBotaoProximo(feedback, textoBotao, aoClicar) {
         if (!feedback || !feedback.parentElement) return;
         
         const btnExistente = feedback.parentElement.querySelector('.btn-proximo-pergunta');
         if (btnExistente) btnExistente.remove();
 
+        // Erro: sem botão "Tentar de novo". O jogador só escolhe outra opção.
+        if (!/^Pr[óo]xima/i.test(textoBotao)) return;
+
         const btn = document.createElement('button');
         btn.className = 'btn-proximo-pergunta';
-        btn.textContent = textoBotao;
+        // Acertou -> seta (mesma imagem do voltar, espelhada, canto inferior direito)
+        if (/^Pr[óo]xima/i.test(textoBotao)) {
+            btn.classList.add('btn-avancar-fase');
+            btn.setAttribute('aria-label', 'Próxima pergunta');
+            btn.innerHTML = '<img src="img/voltar.png" alt="">';
+        } else {
+            btn.textContent = textoBotao;
+        }
         btn.addEventListener('click', () => {
             tocarClique();
             btn.remove();
@@ -415,7 +463,7 @@ document.addEventListener('DOMContentLoaded', () => {
 
         buttonsContainer.innerHTML = '';
 
-        const shuffledOptions = [...currentQuestion.options].sort(() => Math.random() - 0.5);
+        const shuffledOptions = embaralhar([...currentQuestion.options]);
 
         shuffledOptions.forEach(optionText => {
             const btn = document.createElement('button');
@@ -963,7 +1011,7 @@ function showLevel4Question() {
         feedback.textContent = '';
         feedback.className = 'feedback-explicacao';
 
-        const shuffled = [...q.options].sort(() => Math.random() - 0.5);
+        const shuffled = embaralhar([...q.options]);
 
         shuffled.forEach(option => {
             const btn = document.createElement('button');
