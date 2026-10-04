@@ -374,13 +374,6 @@ h1 {
     align-items: center;
 }
 
-/* Nível 1: o apontador usa % do container, então o container mantém sempre
-   a mesma proporção (320x220) e a imagem + apontador escalam juntos */
-.device-diagram-container {
-    height: auto;
-    aspect-ratio: 320 / 220;
-}
-
 .diagram-img {
     max-width: 100%;
     max-height: 100%;
@@ -1339,7 +1332,7 @@ h1 {
     .card:not(.card-gameplay) { padding-bottom: 20px; }
     h1 { margin-bottom: 20px; }
     .gameplay-question-title { margin-bottom: 12px; }
-    .diagram-diagram-container { height: 170px; }
+    .device-diagram-container, .diagram-diagram-container { height: 170px; }
     .interactive-scene-container { max-height: 48dvh; }
     .speech-img-container { max-width: 200px; }
     .tv-img-container { max-width: 170px; }
