@@ -990,10 +990,8 @@ h1 {
     width: 84px;
     height: 84px;
     padding: 0;
-    background: #C7F7FF;
-    border: 10px solid #78F2FF;
-    border-radius: 50%;
-    box-shadow: 0 7px 0 #78F2FF;
+    background: none;
+    border: none;
     display: flex;
     justify-content: center;
     align-items: center;
