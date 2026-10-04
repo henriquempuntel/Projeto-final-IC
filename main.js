@@ -460,7 +460,7 @@ document.addEventListener('DOMContentLoaded', () => {
             tocarAcerto();
             btnElement.classList.add('correct-answer');
             if (feedback) feedback.className = "feedback-explicacao certo";
-            mostrarBotaoProximo(feedback, 'Próxima pergunta ➜', () => {
+            mostrarBotaoProximo(feedback, 'Próxima pergunta', () => {
                 btnElement.classList.remove('correct-answer');
                 changeScreen(screenLevel1Storage, screenLevel1Rain);
             });
@@ -468,7 +468,7 @@ document.addEventListener('DOMContentLoaded', () => {
             tocarErro();
             btnElement.classList.add('wrong-answer');
             if (feedback) feedback.className = "feedback-explicacao errado";
-            mostrarBotaoProximo(feedback, 'Tentar de novo ↩', () => {
+            mostrarBotaoProximo(feedback, 'Tentar de novo', () => {
                 btnElement.classList.remove('wrong-answer');
                 if (feedback) {
                     feedback.textContent = '';
@@ -489,7 +489,7 @@ document.addEventListener('DOMContentLoaded', () => {
             tocarAcerto();
             btnElement.classList.add('correct-answer');
             if (feedback) feedback.className = "feedback-explicacao certo";
-            mostrarBotaoProximo(feedback, 'Próxima pergunta ➜', () => {
+            mostrarBotaoProximo(feedback, 'Próxima pergunta', () => {
                 btnElement.classList.remove('correct-answer');
                 changeScreen(screenLevel1Rain, screenLevel1Clean);
             });
@@ -497,7 +497,7 @@ document.addEventListener('DOMContentLoaded', () => {
             tocarErro();
             btnElement.classList.add('wrong-answer');
             if (feedback) feedback.className = "feedback-explicacao errado";
-            mostrarBotaoProximo(feedback, 'Tentar de novo ↩', () => {
+            mostrarBotaoProximo(feedback, 'Tentar de novo', () => {
                 btnElement.classList.remove('wrong-answer');
                 if (feedback) {
                     feedback.textContent = '';
@@ -518,7 +518,7 @@ document.addEventListener('DOMContentLoaded', () => {
             tocarAcerto();
             btnElement.classList.add('correct-answer');
             if (feedback) feedback.className = "feedback-explicacao certo";
-            mostrarBotaoProximo(feedback, 'Próxima pergunta ➜', () => {
+            mostrarBotaoProximo(feedback, 'Próxima pergunta', () => {
                 btnElement.classList.remove('correct-answer');
                 if (gameState.maxUnlockedLevel < 2) {
                     gameState.maxUnlockedLevel = 2;
@@ -529,7 +529,7 @@ document.addEventListener('DOMContentLoaded', () => {
             tocarErro();
             btnElement.classList.add('wrong-answer');
             if (feedback) feedback.className = "feedback-explicacao errado";
-            mostrarBotaoProximo(feedback, 'Tentar de novo ↩', () => {
+            mostrarBotaoProximo(feedback, 'Tentar de novo', () => {
                 btnElement.classList.remove('wrong-answer');
                 if (feedback) {
                     feedback.textContent = '';
@@ -556,7 +556,7 @@ document.addEventListener('DOMContentLoaded', () => {
             tocarAcerto();
             btnElement.classList.add('correct-answer');
             if (feedback) feedback.className = "feedback-explicacao certo";
-            mostrarBotaoProximo(feedback, 'Próxima pergunta ➜', () => {
+            mostrarBotaoProximo(feedback, 'Próxima pergunta', () => {
                 btnElement.classList.remove('correct-answer');
                 changeScreen(screenLevel2Speech, screenLevel2Friend);
             });
@@ -564,7 +564,7 @@ document.addEventListener('DOMContentLoaded', () => {
             tocarErro();
             btnElement.classList.add('wrong-answer');
             if (feedback) feedback.className = "feedback-explicacao errado";
-            mostrarBotaoProximo(feedback, 'Tentar de novo ↩', () => {
+            mostrarBotaoProximo(feedback, 'Tentar de novo', () => {
                 btnElement.classList.remove('wrong-answer');
                 if (feedback) {
                     feedback.textContent = '';
@@ -585,7 +585,7 @@ document.addEventListener('DOMContentLoaded', () => {
             tocarAcerto();
             btnElement.classList.add('correct-answer');
             if (feedback) feedback.className = "feedback-explicacao certo";
-            mostrarBotaoProximo(feedback, 'Próxima pergunta ➜', () => {
+            mostrarBotaoProximo(feedback, 'Próxima pergunta', () => {
                 btnElement.classList.remove('correct-answer');
                 changeScreen(screenLevel2Friend, screenLevel2Tv);
             });
@@ -593,7 +593,7 @@ document.addEventListener('DOMContentLoaded', () => {
             tocarErro();
             btnElement.classList.add('wrong-answer');
             if (feedback) feedback.className = "feedback-explicacao errado";
-            mostrarBotaoProximo(feedback, 'Tentar de novo ↩', () => {
+            mostrarBotaoProximo(feedback, 'Tentar de novo', () => {
                 btnElement.classList.remove('wrong-answer');
                 if (feedback) {
                     feedback.textContent = '';
@@ -614,7 +614,7 @@ document.addEventListener('DOMContentLoaded', () => {
             tocarAcerto();
             btnElement.classList.add('correct-answer');
             if (feedback) feedback.className = "feedback-explicacao certo";
-            mostrarBotaoProximo(feedback, 'Próxima pergunta ➜', () => {
+            mostrarBotaoProximo(feedback, 'Próxima pergunta', () => {
                 btnElement.classList.remove('correct-answer');
                 if (gameState.maxUnlockedLevel < 3) {
                     gameState.maxUnlockedLevel = 3;
@@ -625,7 +625,7 @@ document.addEventListener('DOMContentLoaded', () => {
             tocarErro();
             btnElement.classList.add('wrong-answer');
             if (feedback) feedback.className = "feedback-explicacao errado";
-            mostrarBotaoProximo(feedback, 'Tentar de novo ↩', () => {
+            mostrarBotaoProximo(feedback, 'Tentar de novo', () => {
                 btnElement.classList.remove('wrong-answer');
                 if (feedback) {
                     feedback.textContent = '';
@@ -652,7 +652,7 @@ document.addEventListener('DOMContentLoaded', () => {
             tocarAcerto();
             btnElement.classList.add('correct-answer');
             if (feedback) feedback.className = "feedback-explicacao certo";
-            mostrarBotaoProximo(feedback, 'Próxima pergunta ➜', () => {
+            mostrarBotaoProximo(feedback, 'Próxima pergunta', () => {
                 btnElement.classList.remove('correct-answer');
                 changeScreen(screenLevel3Seating, screenLevel3FmPurpose);
             });
@@ -660,7 +660,7 @@ document.addEventListener('DOMContentLoaded', () => {
             tocarErro();
             btnElement.classList.add('wrong-answer');
             if (feedback) feedback.className = "feedback-explicacao errado";
-            mostrarBotaoProximo(feedback, 'Tentar de novo ↩', () => {
+            mostrarBotaoProximo(feedback, 'Tentar de novo', () => {
                 btnElement.classList.remove('wrong-answer');
                 if (feedback) {
                     feedback.textContent = '';
@@ -682,7 +682,7 @@ document.addEventListener('DOMContentLoaded', () => {
             tocarAcerto();
             btnElement.classList.add('correct-answer');
             if (feedback) feedback.className = "feedback-explicacao certo";
-            mostrarBotaoProximo(feedback, 'Próxima pergunta ➜', () => {
+            mostrarBotaoProximo(feedback, 'Próxima pergunta', () => {
                 btnElement.classList.remove('correct-answer');
                 resetFmWho();
                 changeScreen(screenLevel3FmPurpose, screenLevel3FmWho);
@@ -691,7 +691,7 @@ document.addEventListener('DOMContentLoaded', () => {
             tocarErro();
             btnElement.classList.add('wrong-answer');
             if (feedback) feedback.className = "feedback-explicacao errado";
-            mostrarBotaoProximo(feedback, 'Tentar de novo ↩', () => {
+            mostrarBotaoProximo(feedback, 'Tentar de novo', () => {
                 btnElement.classList.remove('wrong-answer');
                 if (feedback) {
                     feedback.textContent = '';

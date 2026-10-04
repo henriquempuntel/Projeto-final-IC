@@ -986,7 +986,7 @@ h1 {
     position: relative;
     align-self: flex-start;
     flex-shrink: 0;
-    margin: 20px 0 0 -13px; /* 30px de padding do card - 13px = 17px da borda */
+    margin: 0px 0 0 -13px; /* 30px de padding do card - 13px = 17px da borda */
     width: 84px;
     height: 84px;
     padding: 0;
@@ -997,7 +997,7 @@ h1 {
     align-items: center;
     cursor: pointer;
     outline: none;
-    transition: transform 0.1s, box-shadow 0.1s, background-color 0.2s;
+    transition: transform 0.1s, background-color 0.2s;
 }
 
 .btn-voltar-fase:hover {
