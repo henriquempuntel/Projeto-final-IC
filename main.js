@@ -214,6 +214,7 @@ document.addEventListener('DOMContentLoaded', () => {
     ];
 
     // --- ELEMENTOS DO DOM ---
+    const screenHome = document.getElementById('screen-home');
     const screenWelcome = document.getElementById('screen-welcome');
     const screenDevice = document.getElementById('screen-device');
     const screenName = document.getElementById('screen-name');
@@ -255,6 +256,7 @@ document.addEventListener('DOMContentLoaded', () => {
     const headerAvatarImg = document.getElementById('header-avatar-img');
 
     // Botões e Inputs
+    const btnHomePlay = document.getElementById('btn-home-play');
     const btnWelcomeYes = document.getElementById('btn-welcome-yes');
     const btnWelcomeNo = document.getElementById('btn-welcome-no');
     const deviceOptions = document.querySelectorAll('.device-option');
@@ -329,6 +331,11 @@ document.addEventListener('DOMContentLoaded', () => {
     };
 
     // --- FLUXO DE BOAS-VINDAS E CADASTRO ---
+    btnHomePlay.addEventListener('click', () => {
+        tocarClique();
+        changeScreen(screenHome, screenWelcome);
+    });
+
     btnWelcomeYes.addEventListener('click', () => {
         tocarClique();
         precisaDeQuiz = false;
